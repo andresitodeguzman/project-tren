@@ -5,10 +5,172 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Project Tren</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="index.js"></script>
+    <meta name="theme-color" content="#ffc000">
+    <style>
+        body {
+            margin:0px;
+            padding:0px;
+            width:100%;
+            height:100%;
+            overscroll-behavior:none; 
+        }
+        .preloader {
+            background-color:#ffc000 !important;
+            height:100% !important;
+            width:100% !important;
+            position:fixed !important;
+            z-index: 99999;
+        }
+        #preloaderTitle {
+            position:relative !important;
+            top:45% !important;
+            margin:0px !important;
+            color:white !important;
+            font-size:20pt !important;
+            font-family: Arial, sans-serif !important;
+        }
+        .loader {
+            border: 3px solid #f3f3f3 !important;
+            border-top: 3px solid #607d8b !important;
+            border-radius: 50% !important;
+            width: 25px !important;
+            height:25px !important;
+            animation: spin 2s linear infinite !important;
+        }
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        .primarycolor {
+            background-color:#ffc000 !important;
+        }
+        .brand-logo {
+            font-size:15pt !important;
+            font-weight: bold !important;
+            color:#3a3939 !important;
+            padding-left:15px !important;
+        }
+    </style>
 </head>
-<body>
-    <div class="activity">
-    </div>    
+<body class="grey lighten-4">
+    <!--preloader-->
+    <div class="preloader" id="preloader">
+        <h3 id="preloaderTitle">
+            <center>
+                Project Tren<br><br>
+                <div class="loader"></div>
+                <noscript>Javascript must be turned on</noscript>
+            </center>
+        </h3>
+    </div>
+    <!--.preloader-->
+
+    <!--ride-->
+    <div class="activity" id="mainActivity">
+        <div class="navbar-fixed nav-wrapper">
+            <nav class="primarycolor z-depth-1">
+                    <a class="brand-logo left" href="#!"><i class="material-icons">train</i> Project Tren</a>
+            </nav>
+        </div>
+
+        <div class="container"><br>
+
+            <h5 class="blue-grey-text">My Places</h5>
+            <a class="blue-grey-text modal-trigger" href="#addMyPlacesModal"><i class="material-icons tiny">add</i> Add</i></a>
+
+            <div id="myplacesContainer"></div>
+
+            <br><br>
+            
+            <h5 class="blue-grey-text">Previous Rides</h5>
+            <a class="blue-grey-text"><i class="material-icons tiny">delete</i> Delete All</i></a>
+
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title" style="font-size:15pt !important;">
+                        <i class="material-icons">place</i> Vito Cruz Station to Carriedo Station
+                    </span>
+                    <p>
+                        <i class="material-icons tiny">timer</i> 10 minutes<br>
+                        <i class="material-icons tiny">today</i> January 5
+                    </p>
+                </div>
+                <div class="card-action">
+                    <a class="red-text text-lighten-3" href="#!"><i class="material-icons">delete</i></a>
+                </div>
+            </div>
+
+
+            <br><br><br><br>
+        </div>
+
+        <div class="fixed-action-btn">
+            <a class="btn-floating btn-large primarycolor">
+                <i class="material-icons black-text">add_location</i>
+            </a>
+        </div>
+
+        <!--modals-->
+        <div class="modal modal-fixed-footer" id="addMyPlacesModal">
+            <div class="modal-content">
+                <h5>Add a Place</h5>
+                <br>
+                <div class="input-field">
+                    <input type="text" id="addmplName">
+                    <label for="addmplName">Name</label>
+                </div>
+                <div class="input-field">
+                    <p>From</p>
+                    <select id="addmplFrom" class="need-stations browser-default"></select>
+                </div>
+                <div class="input-field">
+                    <p>To</p>
+                    <select id="addmplTo" class="need-stations browser-default"></select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class="waves-effect waves-green btn-flat" onclick="addMyPlaces()">Add</a>
+                <a href="#!" class="modal-close waves-effect waves-red btn-flat">Close</a>
+            </div>
+        </div>
+        <!--.modals-->
+
+    </div>
+    <!--.ride-->
 </body>
 </html>
+<script type="text/javascript" src="assets/js/jquery.min.js" defer></script>
+<script type="text/javascript" src="assets/materialize/js/materialize.min.js" defer></script>
+<script>
+    //PRPL
+    window.onload = ev=>{
+        var css = [
+            "/assets/materialize/css/materialize.min.css",
+            "/assets/fonts/iconfont/material-icons.css"
+        ];
+        var scripts = [
+            "LocationHelper.js",
+            "data.js",
+            "index.js"
+        ];
+
+        css.forEach(elem=>{
+            var s = document.createElement("link");
+            s.rel = "stylesheet";
+            s.href = elem;
+            document.head.appendChild(s);
+        });
+
+        scripts.forEach(elem=>{
+            var s = document.createElement("script");
+            s.type = "text/javascript";
+            s.defer = true;
+            s.src = elem;
+            document.head.appendChild(s);
+        });
+    };
+</script>
