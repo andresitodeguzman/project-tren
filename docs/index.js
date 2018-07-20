@@ -272,10 +272,6 @@ var ride = (from_id,to_id)=>{
     var successPosition = (pos)=>{
         var lat = pos.coords.latitude;
         var lon = pos.coords.longitude;
-        var alt = pos.coords.altitude;
-        var acc = pos.coords.accuracy;
-        var altacc = pos.coords.altitudeAccuracy;
-        var hdng = pos.coord.heading;
         var sp = pos.coords.speed;
         sp = __locationHelper.transformSpeed(sp);
         
@@ -337,7 +333,7 @@ var ride = (from_id,to_id)=>{
         maximumAge:0,
     }
 
-    var watchid = navigator.geolocation.watchPosition(successPosition,errorPosition,options,options);
+    var watchid = navigator.geolocation.watchPosition(successPosition,errorPosition,options);
     
 }
 
