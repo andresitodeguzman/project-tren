@@ -54,6 +54,10 @@
             color:#3a3939 !important;
             padding-left:15px !important;
         }
+        .activity {
+            height:100%;
+            width:100%;
+        }
     </style>
 </head>
 <body class="grey lighten-4">
@@ -69,10 +73,10 @@
     </div>
     <!--.preloader-->
 
-    <!--ride-->
+    <!--mainActivity-->
     <div class="activity" id="mainActivity">
         <div class="navbar-fixed nav-wrapper">
-            <nav class="primarycolor z-depth-1">
+            <nav class="primarycolor z-depth-0">
                     <a class="brand-logo left" href="#!"><i class="material-icons">train</i> Project Tren</a>
             </nav>
         </div>
@@ -109,7 +113,7 @@
         </div>
 
         <div class="fixed-action-btn">
-            <a class="btn-floating btn-large primarycolor">
+            <a class="btn-floating btn-large primarycolor" href="#!" id="showChooserButton">
                 <i class="material-icons black-text">add_location</i>
             </a>
         </div>
@@ -137,14 +141,94 @@
                 <a href="#!" class="modal-close waves-effect waves-red btn-flat">Close</a>
             </div>
         </div>
+
+        <div class="modal modal-fixed-footer" id="rideMyPlacesModal">
+            <div class="modal-content">
+                <h5>Going...</h5>
+                <br>
+                <div id="rideMyPlacesButtons">
+                    Loading...
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class="modal-close waves-effect waves-red btn-flat">Cancel</a>
+            </div>
+        </div>
+
         <!--.modals-->
 
     </div>
-    <!--.ride-->
+    <!--.mainActivity-->
+
+    <!--chooserActivity-->
+    <div class="activity blue-grey" id="chooserActivity" style="position:fixed; width:100%; height:100%;">
+        <div class="navbar-fixed nav-wrapper">
+            <nav class="z-depth-0 transparent">
+                <a class="right" href="#!" id="closeChooserButton" style="padding-right:15px;"><i class="material-icons">close</i></a>
+            </nav>
+        </div>
+        <div class="container">
+            <br><br>
+            <div class="card z-depth-4 hoverable">
+                <div class="card-content" id="chooserCardContent">
+                    <span class="card-title">
+                        Good day!<br>
+                        Choose your destination
+                    </span><br>
+                    <p>From</p>
+                    <div class="input-field">
+                        <select class="need-stations browser-default" id="from"></select>
+                    </div>
+                    <p>To</p>
+                    <div class="input-field">
+                        <select class="need-stations browser-default" id="to"></select>
+                    </div>
+                </div>
+            </div>
+            <br><br><br><br><br>
+        </div>
+        <div class="fixed-action-btn">
+            <a class="btn-floating btn-large primarycolor" href="#!" id="showRideButton">
+                <i class="material-icons black-text">arrow_forward</i>
+            </a>
+        </div>
+    </div>
+    <!--.chooserActivity-->
+
+    <!--rideActivity-->
+    <div class="activity blue-grey darken-2" id="rideActivity"  style="position:fixed; width:100%; height:100%;">
+        <div class="navbar-fixed nav-wrapper">
+            <nav class="z-depth-0 transparent">
+                <a class="right" href="#!" id="closeRideButton" style="padding-right:15px;"><i class="material-icons">close</i></a>
+            </nav>
+        </div>
+        <div class="container">
+            <h5 class="yellow-text text-darken-3">
+                <center><span id="rideFromName">From</span> → <span id="rideToName">To</span></center>
+            </h5><br>
+            <center>
+                <font class="grey-text text-lighten-2">You're now at</font>
+                <h3 class="white-text" id="rideCurrentStation">
+                    <b><span id="rideCurrentStationName">LRT 1</span> <span id"rideStationWord">Station</span></b>
+                </h3>
+                <font class="grey-text grey-text text-lighten-3">Next: <span id="rideNextStation">Unknown Station</span></font>
+            </center>
+            <br><br>
+            <p class="grey-text text-lighten-1">
+                <i class="material-icons tiny grey-text text-lighten-1">timer</i> ~<span id="rideApproximate">0</span> mins left<br>
+                <i class="material-icons tiny grey-text text-lighten-1">near_me</i> <span id="rideDistance">0</span> kms<br>
+                <i class="material-icons tiny grey-text text-lighten-1">train</i> <span id="rideSpeed">0</span> m/s
+            </p>
+            <br><br><br><br><br>
+        </div>
+    </div>
+    <!--.rideActivity-->
+
 </body>
 </html>
 <script type="text/javascript" src="assets/js/jquery.min.js" defer></script>
 <script type="text/javascript" src="assets/materialize/js/materialize.min.js" defer></script>
+<script type="text/javascript" src="LocationHelper.js" defer></script>
 <script>
     //PRPL
     window.onload = ev=>{
@@ -153,7 +237,6 @@
             "/assets/fonts/iconfont/material-icons.css"
         ];
         var scripts = [
-            "LocationHelper.js",
             "data.js",
             "index.js"
         ];
