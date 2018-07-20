@@ -173,9 +173,9 @@ var addMyPlaces = ()=>{
             lt2 = snt.latitude;
             ln2 = snt.longitude;
 
-            var dist = __locationHelper.distance(lt1,ln1,lt2,ln2);
+            var dist = __locationHelper.distance(lt1,ln1,lt2,ln2)/1000;
             var apxt = __locationHelper.getApproximateTime(dist,6.7);
-            var apmin = Math.trunc(apxt);
+            var apmin = Math.trunc(apxt/1000);
             var array = {
                 name: n,
                 from: snf.name,
@@ -266,7 +266,7 @@ var ride = (from_id,to_id)=>{
     $("#rideToName").html(to.name);
 
     clear();
-    $("meta[name='theme-color']").attr("content","#ffc000");
+    $("meta[name='theme-color']").attr("content","#607d8b");
     showActivity('ride');
 
     var successPosition = (pos)=>{
