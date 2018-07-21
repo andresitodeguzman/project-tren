@@ -159,7 +159,7 @@
      */
     transformSpeed(speed){
         var s = +speed;
-        var c = +6.7;
+        var c = +3.7;
         if(isNaN(s)) return c;
         if(s < c) return c;
         if(s == c) return s;

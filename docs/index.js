@@ -6,6 +6,7 @@ $(document).ready(()=>{
     showActivity('main');
     setStations();
     setMyPlaces();
+    setPreviousRides();
 });
 
 $("#showChooserButton").click(()=>{
@@ -80,6 +81,11 @@ $("#showRideButton").click(()=>{
     } else {
         ride(f,t);
     }
+});
+
+$("#doneRideExitButton").click(()=>{
+    clear();
+    showActivity('main');
 });
 
 let clear = ()=>{
@@ -173,9 +179,9 @@ var addMyPlaces = ()=>{
             lt2 = snt.latitude;
             ln2 = snt.longitude;
 
-            var dist = __locationHelper.distance(lt1,ln1,lt2,ln2)/1000;
-            var apxt = __locationHelper.getApproximateTime(dist,6.7);
-            var apmin = Math.trunc(apxt/1000);
+            var dist = __locationHelper.distance(lt1,ln1,lt2,ln2);
+            var apxt = __locationHelper.getApproximateTime(dist,3.7);
+            var apmin = Math.trunc(apxt);
             var array = {
                 name: n,
                 from: snf.name,
@@ -281,8 +287,16 @@ var ride = (from_id,to_id)=>{
         appx = Math.trunc(appx);
 
         if(nearest.id == to_id){
-            alert("You are now at the station");
+            clear();
+            showActivity('doneRide');
             navigator.geolocation.clearWatch(watchid);
+            var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+            var date = new Date();
+            var dte = date.getMonth();
+            var dy = date.getDate();
+            var yr = date.getFullYear();
+            var inst = `${dte} ${dy}, ${yr}`;
+            addToPreviousRides(from.name,to.name,inst);
         }
 
         var csn = $("#rideCurrentStationName").html();
@@ -336,6 +350,63 @@ var ride = (from_id,to_id)=>{
 
     var watchid = navigator.geolocation.watchPosition(successPosition,errorPosition,options);
     
+}
+
+var getPreviousRides = ()=>{
+    if(!localStorage.getItem("tren-prevrides")){
+        localStorage.setItem("tren-prevrides",JSON.stringify([]));
+        return [];
+    } else {
+        return JSON.parse(localStorage.getItem("tren-prevrides"));
+    }    
+}
+
+var addToPreviousRides = (from_name,to_name,date)=>{
+    var prevrides = getPreviousRides();
+    var array = {
+        from_name:from_name,
+        to_name:to_name,
+        date:date
+    };
+    prevrides.unshift(array);
+    localStorage.setItem("tren-prevrides",JSON.stringify(array));
+}
+
+var setPreviousRides = ()=>{
+    var prevrides = getPreviousRides();
+    $("#previousRideList").html("");
+    prevrides.forEach((elem,index)=>{
+        var tpl = `
+            <div class="card hoverable">
+                <div class="card-content">
+                    <span class="card-title" style="font-size:15pt !important;">
+                        <i class="material-icons">place</i> ${elem.from_name} Station to ${elem.to_name} Station
+                    </span>
+                    <p>
+                        <i class="material-icons tiny">today</i> ${elem.date}
+                    </p>
+                </div>
+                <div class="card-action">
+                    <a class="red-text text-lighten-3" href="#!" onclick="deletePreviousRide('${index}')"><i class="material-icons">delete</i></a>
+                </div>
+            </div>
+        `;
+        $("#previousRideList").append(tpl);
+    });
+
+    var ht = $("#previousRideList").html();
+    if(ht == ""){
+        var tpl = `
+            <br>
+                <center>
+                    <h5 class="grey-text text-lighten-1">
+                        All the rides you've made will be here
+                    </h5>
+                </center>
+            <br>
+        `;
+        $("#previousRideList").html(tpl);
+    }
 }
 
 var findStationById = (id)=>{
