@@ -6,6 +6,18 @@
     <title>Project Tren</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#ffc000">
+    <script type="text/javascript">
+        if('serviceWorker' in navigator){
+            navigator.serviceWorker.register('/project-tren/serviceworker.js',{scope:'/project-tren/'}).then(reg=>{
+                console.log('SW Log: Registration was Successful');
+            }).catch(err=>{
+                var error = err;
+                console.log(`SW Log: [Error] ${error}`);
+            });
+        } else {
+            console.log(`SW Log: [Error] Feature Not Available on this Browser`);
+        }
+    </script>
     <style>
         body {
             margin:0px;
