@@ -60,6 +60,10 @@ $("#showChooserButton").click(()=>{
 
 });
 
+$("#deleteAllPreviousRideButton").click(()=>{
+    deleteAllPreviousRides();
+});
+
 $("#closeChooserButton").click(()=>{
     clear();
     $("meta[name='theme-color']").attr("content","#ffc000");
@@ -68,9 +72,7 @@ $("#closeChooserButton").click(()=>{
 }); 
 
 $("#closeRideButton").click(()=>{
-    clear();
-    $("meta[name='theme-color']").attr("content","#ffc000");
-    showActivity("main");
+    window.location.reload();
 }); 
 
 $("#showRideButton").click(()=>{
@@ -273,7 +275,7 @@ var ride = (from_id,to_id)=>{
     $("#rideToName").html(to.name);
 
     clear();
-    $("meta[name='theme-color']").attr("content","#607d8b");
+    $("meta[name='theme-color']").attr("content","#455a64");
     showActivity('ride');
 
     var successPosition = (pos)=>{
@@ -289,7 +291,7 @@ var ride = (from_id,to_id)=>{
 
         if(nearest.id == to_id){
             try {
-                window.navigator.vibrate(500);
+                window.navigator.vibrate(1500);
             } catch (error) {
                 console.log("Vibration is not supported in the device");
             }
@@ -300,6 +302,7 @@ var ride = (from_id,to_id)=>{
             var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
             var date = new Date();
             var dte = date.getMonth();
+            dte = months[dte];
             var dy = date.getDate();
             var yr = date.getFullYear();
             var inst = `${dte} ${dy}, ${yr}`;
