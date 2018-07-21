@@ -237,7 +237,7 @@ var askRideMyPlaces = (id)=>{
             <a onclick="ride('${fid}','${tid}')" href="#!" class="modal-close">
                 <li class="collection-item">
                     <p>
-                        <span style="font-size:13pt;color:black;"><b>Going from ${n}</b></span><br>
+                        <span style="font-size:13pt;color:black;"><b>Going to ${n}</b></span><br>
                         <font size="-1" class="grey-text">${f} → ${t}</font>
                     </p>
                 </li>
@@ -245,7 +245,7 @@ var askRideMyPlaces = (id)=>{
             <a onclick="ride('${tid}','${fid}')" href="#!" class="modal-close">
                 <li class="collection-item">
                     <p>
-                        <span style="font-size:13pt;color:black;"><b>Going to ${n}</b></span><br>
+                        <span style="font-size:13pt;color:black;"><b>Going from ${n}</b></span><br>
                         <font size="-1" class="grey-text">${t} → ${f}</font>
                     </p>
                 </li>
