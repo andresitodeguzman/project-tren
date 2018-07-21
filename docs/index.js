@@ -286,9 +286,6 @@ var ride = (from_id,to_id)=>{
         }
 
         var csn = $("#rideCurrentStationName").html();
-        if(csn != nearest.name){
-            $("#rideCurrentStation").fadeIn();
-        }
 
         $("#rideCurrentStationName").html(nearest.name);
         $("#rideDistance").html(Math.trunc(dist));
@@ -308,7 +305,18 @@ var ride = (from_id,to_id)=>{
             var nxt = findStationById(nearest.southbound_next);
             $("#rideNextStation").html(nxt.name);
         }
-        
+
+        var rsts = `
+            Speed: ${pos.coords.speed}<br>
+            Distance: ${dist}<br>
+            Time: ${appx}<br>
+        `;
+        $("#rawstats").html(rsts);
+
+        if(csn != nearest.name){
+            $("#rideCurrentStation").hide();
+            $("#rideCurrentStation").fadeIn();
+        }
 
     };
 
