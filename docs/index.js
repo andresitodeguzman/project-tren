@@ -2,6 +2,7 @@ let __locationHelper = new LocationHelper();
 
 $(document).ready(()=>{   
     $('.modal').modal();
+    $('.dropdown-trigger').dropdown();
     clear();
     showActivity('main');
     setStations();

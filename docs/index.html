@@ -78,7 +78,32 @@
         <div class="navbar-fixed nav-wrapper">
             <nav class="primarycolor z-depth-0">
                     <a class="brand-logo left" href="#!"><i class="material-icons">train</i> Project Tren</a>
+                    <div class="right" style="padding-right:15px;">
+                        <a href="#!" class="black-text dropdown-trigger" data-target="options"><i class="material-icons black-text">more_vert</i></a>
+                    </div>
             </nav>
+        </div>
+
+        <ul class="dropdown-content" id="options">
+            <li>
+                <a href="#aboutapp" class="modal-trigger black-text">About App</a>
+            </li>
+        </ul>
+
+        <div class="modal modal-fixed-footer" id="aboutapp">
+            <div class="modal-content">
+                <h5>About App</h5><br>
+                <p>
+                    Andresito de Guzman 2018<br>
+                    <br>
+                    This is still an experimental technology, it is always recommended to always check manually what station you are in right now as a precaution because geolocaion fails sometimes or is not accurate. Data that are derived and estimated might not be accurate and should not be used as a basis for determining metrics. The app developer is not liable of any damages that might occur for relying on the given estimates.
+                    <br><br>
+                    For bugs and feature suggestions, email the developer at <a href="mailto:andresitomyemaiL@gmail.com" class="black-text">andresitomyemail@gmail.com</a>
+                </p>
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class="modal-close waves-effect waves-red btn-flat">Close</a>
+            </div>
         </div>
 
         <div class="container"><br>
@@ -217,9 +242,9 @@
             <center>
                 <h4 class="black-text">
                     <i class="material-icons large nlack-text">mood</i><br>
-                    You are approaching your destination!
+                    You are approaching your destination in a few seconds!
                 </h4>
-                <p class="grey-text">As a precaution, please check your valuables including the card your will use for exit before leaving the train.</p><br>
+                <p class="white-text">As a precaution, please check your valuables including the card your will use for exit before leaving the train.</p><br>
                 <br><br>
                 <button class="btn btn-large blue-grey darken-1" id="doneRideExitButton">Okay, Thanks!</button>
             </center>
