@@ -85,6 +85,7 @@ $("#showRideButton").click(()=>{
 
 $("#doneRideExitButton").click(()=>{
     clear();
+    $("meta[name='theme-color']").attr("content","#ffc000");
     showActivity('main');
 });
 
@@ -287,7 +288,13 @@ var ride = (from_id,to_id)=>{
         appx = Math.trunc(appx);
 
         if(nearest.id == to_id){
+            try {
+                window.navigator.vibrate(500);
+            } catch (error) {
+                console.log("Vibration is not supported in the device");
+            }
             clear();
+            $("meta[name='theme-color']").attr("content","#ffc000");
             showActivity('doneRide');
             navigator.geolocation.clearWatch(watchid);
             var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
@@ -369,7 +376,8 @@ var addToPreviousRides = (from_name,to_name,date)=>{
         date:date
     };
     prevrides.unshift(array);
-    localStorage.setItem("tren-prevrides",JSON.stringify(array));
+    localStorage.setItem("tren-prevrides",JSON.stringify(prevrides));
+    setPreviousRides();
 }
 
 var setPreviousRides = ()=>{
@@ -380,7 +388,7 @@ var setPreviousRides = ()=>{
             <div class="card hoverable">
                 <div class="card-content">
                     <span class="card-title" style="font-size:15pt !important;">
-                        <i class="material-icons">place</i> ${elem.from_name} Station to ${elem.to_name} Station
+                        <i class="material-icons">place</i> ${elem.from_name} Station → ${elem.to_name} Station
                     </span>
                     <p>
                         <i class="material-icons tiny">today</i> ${elem.date}
@@ -407,6 +415,20 @@ var setPreviousRides = ()=>{
         `;
         $("#previousRideList").html(tpl);
     }
+}
+
+var deletePreviousRide = (id)=>{
+    var prevrides = getPreviousRides();
+    prevrides.splice(id,1);
+    localStorage.setItem("tren-prevrides",JSON.stringify(prevrides));
+    M.toast({html:"Previous Ride deleted successfully!",durationLength:3000});
+    setPreviousRides();
+};
+
+var deleteAllPreviousRides = ()=>{
+    localStorage.setItem("tren-prevrides",JSON.stringify([]));
+    M.toast({html:"All previous rides are deleted successfully!",durationLength:3000});
+    setPreviousRides();
 }
 
 var findStationById = (id)=>{
