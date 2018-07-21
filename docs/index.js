@@ -276,7 +276,7 @@ var ride = (from_id,to_id)=>{
         sp = __locationHelper.transformSpeed(sp);
         
         var nearest = __locationHelper.nearest(lat,lon,__stationList);
-        var dist = __locationHelper.distance(lat,lon,nearest.latitude,nearest.longitude);
+        var dist = __locationHelper.distance(lat,lon,to.latitude,to.longitude);
         var appx = __locationHelper.getApproximateTime(dist,sp);
         appx = Math.trunc(appx);
 
@@ -305,14 +305,7 @@ var ride = (from_id,to_id)=>{
             var nxt = findStationById(nearest.southbound_next);
             $("#rideNextStation").html(nxt.name);
         }
-
-        var rsts = `
-            Speed: ${pos.coords.speed}<br>
-            Distance: ${dist}<br>
-            Time: ${appx}<br>
-        `;
-        $("#rawstats").html(rsts);
-
+        
         if(csn != nearest.name){
             $("#rideCurrentStation").hide();
             $("#rideCurrentStation").fadeIn();
