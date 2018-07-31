@@ -228,8 +228,8 @@
             </nav>
         </div>
         <div class="container">
-            <h5 class="yellow-text text-darken-3">
-                <center><span id="rideFromName">From</span> → <span id="rideToName">To</span></center>
+            <h5>
+                <a href="#stationsModal" class="modal-trigger yellow-text text-darken-3"><center><span id="rideFromName">From</span> → <span id="rideToName">To</span></center></a>
             </h5><br>
             <center>
                 <font class="grey-text text-lighten-2">You're now at</font>
@@ -246,6 +246,19 @@
             </p>
             <br><br><br><br><br>
         </div>
+
+        <div class="modal modal-fixed-footer" id="stationsModal">
+            <div class="modal-content">
+                <h5 class="blue-grey-text text-darken-4">LRT Line 1 Stations</h5>
+                <p>From northbound to southbound</p>
+                <br>
+                <ul id="stationsModalList" class="collection"></ul>
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class="modal-close waves-effect waves-red btn-flat">Close</a>
+            </div>
+        </div>
+
     </div>
     <!--.rideActivity-->
 

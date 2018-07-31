@@ -103,11 +103,20 @@ let showActivity = (title)=>{
 
 let setStations = ()=>{
     $("#needsStations").html("");
+    $("#stationsModalList").html("");
     $.each(__stationList,(index,val)=>{
         var i = val.id;
         var n = val.name;
+        var c = val.city;
         var optTpl = `<option value="${i}">${n}</option>`;
+        var listTpl = `
+            <li class="collection-item">
+                <b>${n} Station</b><br>
+                ${c}
+            </li>
+        `;
         $(".need-stations").append(optTpl);
+        $("#stationsModalList").append(listTpl);
     });
 }
 
