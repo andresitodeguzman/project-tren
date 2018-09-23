@@ -1,10 +1,26 @@
+/**
+    Project Tren
+    2018
+
+    Andresito de Guzman
+ */
+
+// Initiate Library Helper
 let __locationHelper = new LocationHelper();
 
+// Initialization scripts
 $(document).ready(()=>{   
+    // Instantiate UI Elements
     $('.modal').modal();
     $('.dropdown-trigger').dropdown();
+
+    // Clear view
     clear();
+
+    // Show Main Activity
     showActivity('main');
+
+    // Asynchronously prepare data
     setStations();
     setMyPlaces();
     setPreviousRides();
@@ -289,49 +305,86 @@ var ride = (from_id,to_id)=>{
     showActivity('ride');
 
     var successPosition = (pos)=>{
+        // Create variables for the coordinates
         var lat = pos.coords.latitude;
         var lon = pos.coords.longitude;
         var sp = pos.coords.speed;
+
+        // Use 3.7 as base speed if equal or lower than
         sp = __locationHelper.transformSpeed(sp);
-        
+
+        // Get the nearest station and distance using Pythagoras Equirectagular
         var nearest = __locationHelper.nearest(lat,lon,__stationList);
         var dist = __locationHelper.distance(lat,lon,to.latitude,to.longitude);
+
+        // Get the time using speed per given distance
         var appx = __locationHelper.getApproximateTime(dist,sp);
+        // Remove unecessary trailing numbers w/o rounding it off
         appx = Math.trunc(appx);
 
+
+        var shareCurrentLocation = ()=>{
+            if(navigator.share){
+                navigator.share({
+                    title: `I'm currently at ${nearest.name} Station of LRT-1`,
+                    text: `I just wanted to let you know that I'm at ${nearest.name}. You may also track your LRT-1 location with Project Tren!`,
+                    url: "https://andresitodeguzman.github.io/project-tren"
+                })
+                    .then(()=>{
+                        M.toast({html:"Succcessfully shared your current location!",durationLength:3000});
+                    })
+                    .catch();
+            } else {
+                M.toast({html:"Share isn't available on your device",durationLength:3000});
+            }
+        };
+
+        // Someting to do when user arrived at the destination
         if(nearest.id == to_id){
+            // Try to vibrate
             try {
                 window.navigator.vibrate(1500);
             } catch (error) {
                 console.log("Vibration is not supported in the device");
             }
+            // Clear view
             clear();
+            // Reset theme color
             $("meta[name='theme-color']").attr("content","#ffc000");
+            // Show done riding activity
             showActivity('doneRide');
+            // Clear watcher 
             navigator.geolocation.clearWatch(watchid);
+
             var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+
             var date = new Date();
             var dte = date.getMonth();
             dte = months[dte];
             var dy = date.getDate();
             var yr = date.getFullYear();
             var inst = `${dte} ${dy}, ${yr}`;
+
             addToPreviousRides(from.name,to.name,inst);
         }
 
+        // Declare for use later
         var csn = $("#rideCurrentStationName").html();
 
+        // Show to UI the metrics and current location
         $("#rideCurrentStationName").html(nearest.name);
         $("#rideDistance").html(Math.trunc(dist));
         $("#rideApproximate").html(appx);
         $("#rideSpeed").html(Math.trunc(pos.coords.speed));
 
+        // Decide whether the current station is a terminal or not
         if(nearest.is_terminal == "TRUE"){
             $("#rideStationWord").html("Terminal");
         } else {
             $("#rideStationWord").html("Station");
         }
 
+        // Check if north/south bound then detect next station
         if(bt == "northbound"){
             var nxt = findStationById(nearest.northbound_next);
             $("#rideNextStation").html(nxt.name);

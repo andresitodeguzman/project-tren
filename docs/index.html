@@ -71,6 +71,14 @@
             height:100%;
             width:100%;
         }
+
+        footer {
+            position: fixed !important;
+            padding-left:10%;
+            bottom: 4%;
+            height:auto;
+            width: 100%;
+        }
     </style>
 </head>
 <body class="grey lighten-4">
@@ -238,12 +246,6 @@
                 </h3>
                 <font class="grey-text grey-text text-lighten-3">Next: <span id="rideNextStation">Unknown Station</span></font>
             </center>
-            <br><br><br>
-            <p class="grey-text text-lighten-1">
-                <i class="material-icons tiny grey-text text-lighten-1">timer</i> ~<span id="rideApproximate">0</span> mins left<br>
-                <i class="material-icons tiny grey-text text-lighten-1">near_me</i> <span id="rideDistance">0</span> kms<br>
-                <i class="material-icons tiny grey-text text-lighten-1">train</i> <span id="rideSpeed">0</span> m/s
-            </p>
             <br><br><br><br><br>
         </div>
 
@@ -258,6 +260,16 @@
                 <a href="#!" class="modal-close waves-effect waves-red btn-flat">Close</a>
             </div>
         </div>
+
+        <footer>
+            <p class="grey-text text-lighten-1">
+                <i class="material-icons tiny grey-text text-lighten-1">timer</i> ~<span id="rideApproximate">0</span> mins left<br>
+                <i class="material-icons tiny grey-text text-lighten-1">near_me</i> <span id="rideDistance">0</span> kms<br>
+                <i class="material-icons tiny grey-text text-lighten-1">train</i> <span id="rideSpeed">0</span> m/s<br>
+                <br>
+                <a onclick="shareCurrentLocation()">Share Ride</a>
+            </p>
+        </footer>
 
     </div>
     <!--.rideActivity-->
