@@ -331,7 +331,7 @@ var ride = (from_id,to_id)=>{
             if(navigator.share){
                 navigator.share({
                     title: `I'm currently at ${nearest.name} Station of LRT-1`,
-                    text: `I just wanted to let you know that I'm at ${nearest.name}. You may also track your LRT-1 location with Project Tren!`,
+                    text: `I just wanted to let you know that I am currently at ${nearest.name}. You may also track and share at which exact LRT-1 station you're nearby with Project Tren!`,
                     url: "https://andresitodeguzman.github.io/project-tren"
                 })
                     .then(()=>{
