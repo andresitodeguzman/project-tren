@@ -302,6 +302,11 @@ var ride = (from_id,to_id)=>{
 
     clear();
     $("meta[name='theme-color']").attr("content","#455a64");
+
+    if(!navigator.share){
+        $("#shareRideButton").hide();
+    }
+
     showActivity('ride');
 
     var successPosition = (pos)=>{
@@ -322,8 +327,7 @@ var ride = (from_id,to_id)=>{
         // Remove unecessary trailing numbers w/o rounding it off
         appx = Math.trunc(appx);
 
-
-        var shareCurrentLocation = ()=>{
+        $("#shareRideButton").click(()=>{
             if(navigator.share){
                 navigator.share({
                     title: `I'm currently at ${nearest.name} Station of LRT-1`,
@@ -337,7 +341,7 @@ var ride = (from_id,to_id)=>{
             } else {
                 M.toast({html:"Share isn't available on your device",durationLength:3000});
             }
-        };
+        });
 
         // Someting to do when user arrived at the destination
         if(nearest.id == to_id){
