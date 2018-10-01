@@ -504,3 +504,16 @@ var deleteAllPreviousRides = ()=>{
 var findStationById = (id)=>{
     return __stationList.find(obj=>{return obj.id == id;});
 }
+
+var getPreLocationMessage()=>{
+  var msg = localStorage.getItem("tren-prelocation-msg");
+  if(!msg){
+    return "I just wanted to let you know that I am currently at ";
+  } else {
+    return msg;
+  }
+}
+
+var setPreLocationMessage(msg)=>{
+  localStorage.setItem("tren-prelocation-msg",msg);
+}
