@@ -485,7 +485,7 @@ var setPreviousRides = ()=>{
         `;
         $("#previousRideList").html(tpl);
     }
-}
+} 
 
 var deletePreviousRide = (id)=>{
     var prevrides = getPreviousRides();
@@ -505,7 +505,7 @@ var findStationById = (id)=>{
     return __stationList.find(obj=>{return obj.id == id;});
 }
 
-var getPreLocationMessage()=>{
+var getPreLocationMessage = ()=>{
   var msg = localStorage.getItem("tren-prelocation-msg");
   if(!msg){
     return "I just wanted to let you know that I am currently at ";
@@ -514,6 +514,6 @@ var getPreLocationMessage()=>{
   }
 }
 
-var setPreLocationMessage(msg)=>{
+var setPreLocationMessage = (msg)=>{
   localStorage.setItem("tren-prelocation-msg",msg);
 }
