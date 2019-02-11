@@ -1,4 +1,5 @@
 angular.module('projectTrenApp',[
   'ngRoute',
-  'home'
+  'home',
+  'ride'
 ]);

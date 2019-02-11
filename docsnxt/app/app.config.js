@@ -3,6 +3,7 @@ angular.module('projectTrenApp').config([
   function config($routeProvider){
     $routeProvider
       .when('/',{template:"<home></home>"})
+      .when('/ride',{template:"<ride></ride>"})
       .otherwise('/');
   }
 ]);
