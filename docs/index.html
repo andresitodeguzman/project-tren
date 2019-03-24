@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Project Tren</title>
+    <meta name="Description" content="Track and share at which exact LRT-1 station you're nearby with Project Tren!">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#ffc000">
     <link rel="manifest" href="manifest.json">
@@ -20,6 +21,10 @@
         }
     </script>
     <style>
+        :root {
+        	font-display:auto !important;    
+        }
+        
         body {
             margin:0px;
             padding:0px;
@@ -129,15 +134,15 @@
 
         <div class="container"><br>
 
-            <h5 class="blue-grey-text">My Places</h5>
-            <a class="blue-grey-text modal-trigger" href="#addMyPlacesModal"><i class="material-icons tiny">add</i> Add</i></a>
+            <h5 class="blue-grey-text text-darken-3">My Places</h5>
+            <a class="blue-grey-text text-darken-3 modal-trigger" href="#addMyPlacesModal"><i class="material-icons tiny">add</i> Add</i></a>
 
             <div id="myplacesContainer"></div>
 
             <br><br>
             
-            <h5 class="blue-grey-text">Previous Rides</h5>
-            <a class="blue-grey-text" id="deleteAllPreviousRideButton"><i class="material-icons tiny">delete</i> Delete All</i></a>
+            <h5 class="blue-grey-text text-darken-3">Previous Rides</h5>
+            <a class="blue-grey-text text-darken-3" id="deleteAllPreviousRideButton"><i class="material-icons tiny">delete</i> Delete All</i></a>
 
             <div id="previousRideList"></div>
 
