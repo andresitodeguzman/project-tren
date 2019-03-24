@@ -179,7 +179,7 @@ let setMyPlaces = ()=>{
         var tpl = `
             <br>
                 <center>
-                    <h5 class="grey-text text-lighten-1">
+                    <h5 class="blue-grey-text text-darken-3">
                         Add Home or Work to your places
                     </h5>
                 </center>
@@ -477,7 +477,7 @@ var setPreviousRides = ()=>{
         var tpl = `
             <br>
                 <center>
-                    <h5 class="grey-text text-lighten-1">
+                    <h5 class="blue-grey-text text-darken-3">
                         All the rides you've made will be here
                     </h5>
                 </center>
