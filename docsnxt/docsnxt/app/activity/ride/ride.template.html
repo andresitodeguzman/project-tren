@@ -1,0 +1,28 @@
+<style>
+.blinkscreen {
+    position:fixed;
+    width:100%;
+    height:100%;
+    background-color: #eeee;
+    z-index:99999999999999;
+}
+
+</style>
+
+<div class="blinkscreen" id="bsEnter"></div>
+<div class="blinkscreen" id="bsExit"></div>
+
+<div >
+    <nav class="transparent z-depth-0">
+    	<div class="right" style="padding-right:5%">
+        	<a ng-click="$ctrl.exit()">
+               <i class="material-icons">close</i>
+            </a>
+        </div>
+    </nav>
+    <div class="container"><br>
+        <h1 class="White-text" id="coords">
+            <ridedash></ridedash>
+        </h1>
+    </div>
+</div>

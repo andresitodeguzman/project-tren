@@ -1,0 +1,8 @@
+angular.module('projectTrenApp',[
+  'ngRoute',
+  'ngAnimate',
+  'home',
+  'ride',
+  'more',
+  'system'
+]);

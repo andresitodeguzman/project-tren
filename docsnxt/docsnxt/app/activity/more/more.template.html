@@ -1,0 +1,24 @@
+<style>
+ul.collection {
+	border:0 !important;
+}
+
+li.collection-item {
+	background-color:transparent !important;
+    border:0 !important;
+}
+</style>
+<div class="container"><br><br>
+    <center>
+        <h4><b class="grey-text">Project Tren</b></h4>
+    </center>
+</div>
+    <br><br>
+    <ul class="collection">
+        <li class="collection-item" ng-repeat="s in $ctrl.stations">
+            {{s.id}}: {{s.name}}
+        </li>
+    </ul>
+<br><br><br>
+
+<bottombar></bottombar>
