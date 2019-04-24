@@ -332,7 +332,7 @@ var ride = (from_id,to_id)=>{
                 navigator.share({
                     title: `I'm currently at ${nearest.name} Station of LRT-1`,
                     text: `I just wanted to let you know that I am currently at ${nearest.name}. You may also track and share at which exact @officialLRT1 station you're nearby with Project Tren!`,
-                    url: "https://andresitodeguzman.github.io/project-tren"
+                    url: "https://bit.ly/project-tren"
                 })
                     .then(()=>{
                         M.toast({html:"Succcessfully shared your current location!",durationLength:3000});
