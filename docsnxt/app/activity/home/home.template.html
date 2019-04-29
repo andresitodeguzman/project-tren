@@ -75,23 +75,18 @@
         </center>
     </h4><br>
 </div>
-	    	<div class="horizontal-scroll" style="padding-top:10px; padding-bottom:10px; padding-right:30px;">
-            <span class="grey-text" style="padding-right:10px">
-            	are you going...
-             </span>
-    		<h1 class="circle-title">
-               Home 
-            </h1>
-            <h1 class="circle-title">
-               School 
-            </h1>
-                <h1 class="circle-title">
-               Bambang Station 
-            </h1>
-    	</div>    	
+
+<div class="horizontal-scroll" style="padding-top:10px; padding-bottom:10px; padding-right:30px;" ng-if="$ctrl.nearestStations.length !== 0">
+    <span class="grey-text" style="padding-right:10px">
+        are you going to...
+    </span>
+    <h1 class="circle-title" ng-repeat="st in $ctrl.nearestStations">
+        {{st.name}}
+    </h1>
+</div>    	
     
 	<br>
-    <div ng-if="$ctrl.recentStations">
+    <div ng-if="$ctrl.recentStations.length !== 0">
         <div class="container">
         	<h5 class="white-text" ng-if="$ctrl.isDark == true">Recent Places</h5>
             <h5 class="grey-text" ng-if="$ctrl.isDark == false">Recent Places</h5>

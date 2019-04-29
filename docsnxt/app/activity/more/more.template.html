@@ -1,13 +1,3 @@
-<style>
-ul.collection {
-	border:0 !important;
-}
-
-li.collection-item {
-	background-color:transparent !important;
-    border:0 !important;
-}
-</style>
 <div class="container"><br><br>
     <center>
         <h4><b class="grey-text">Project Tren</b></h4>
@@ -15,9 +5,16 @@ li.collection-item {
 </div>
     <br><br>
     <ul class="collection">
-        <li class="collection-item" ng-repeat="s in $ctrl.stations">
-            {{s.id}}: {{s.name}}
-        </li>
+        <a onclick="window.ui.toggleDarkMode(); window.location.reload()" class="black-text">
+        	<li class="collection-item transparent">
+            	Toggle Dark Mode
+            </li>
+        </a>
+        <a ng-href="#!about" class="black-text">
+        	<li class="collection-item transparent">
+            	About App
+            </li>
+        </a>        
     </ul>
 <br><br><br>
 

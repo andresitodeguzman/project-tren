@@ -1,0 +1,31 @@
+<nav class="transparent z-depth-0">
+    <div class="right" style="padding-right:5%">
+        <a ng-href="#!" class="grey-text text-darken-4">
+            <i class="material-icons white-text" ng-if="$ctrl.isDark == true">close</i>
+            <i class="material-icons" ng-if="$ctrl.isDark == false">close</i>
+        </a>
+    </div>
+</nav>
+<div class="container">
+    <h4 ng-if="$ctrl.isDark == false" class="grey-text text-darken-3">Previous Rides</h4>
+    <h4 ng-if="$ctrl.isDark == true" class="white-text">Ride History</h4>    
+</div>
+<div class="container grey-text" ng-if="$ctrl.pastRides.length == 0" style="text-align:center !important;"><br><br><br>
+	<i class="material-icons" style="font-size:8rem !important;">
+        mood_bad
+    </i>
+    <h3>
+        Welp.. try riding the train
+    </h3>
+    
+</div>
+<br>
+<ul class="collection" ng-if="$ctrl.pastRides.length !== 0">
+    <li class="collection-item transparent" ng-repeat="p in $ctrl.pastRides">
+    	<h5>
+            <i class="material-icons">place</i> {{($ctrl.stations.getById(p.from_id)).name}} → {{($ctrl.stations.getById(p.to_id)).name}}<br>
+        </h5>
+        <br>
+        {{p.timestamp}}
+    </li>
+</ul>

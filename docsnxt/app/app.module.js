@@ -4,5 +4,8 @@ angular.module('projectTrenApp',[
   'home',
   'ride',
   'more',
-  'system'
+  'system',
+  'ridehistory',
+  'about',
+  'station'
 ]);

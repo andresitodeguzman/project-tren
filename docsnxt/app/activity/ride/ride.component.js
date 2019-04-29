@@ -3,6 +3,7 @@ angular.module('ride',['ridedash']).component('ride',{
     controller: function rideController(){
         
         this.isDark = window.data.ui.dark;
+        this.positionWatcher = null;
         
         // add all controller functions here
         this.$onInit = ()=>{
@@ -16,13 +17,44 @@ angular.module('ride',['ridedash']).component('ride',{
 		
            	$("meta[name=theme-color]").attr("content","#263238");
             
+            if('geolocation' in navigator){
+                this.positionWatcher = navigator.geolocation.watchPosition(succ=>{
+                    window.ride.updateCurrent(succ.coords);
+                    this.currentStation = window.stations.nearestOne(succ.coords.latitude,succ.coords.longitude);
+                    
+                    console.log(this.currentStation);
+                    if(!this.currentStation){
+                        if(!window.data.ride.currentStation){
+                            $("#rideInterface").hide();
+                            $("#noNearbyStation").show();
+                        }
+                    } else {
+                        window.ride.updateCurrent(this.currentStation);
+                        console.log('Updated');
+                        console.log(this.currentStation);
+                    }
+                    
+                }, err=>{
+                 	console.log(err);
+                });
+            } else {
+                $("#geolocationNotAllowed").show();
+                $("#rideInterface").hide();
+            }
+            
         };
         
         this.exit = ()=>{
-				$("#bsExit").fadeIn();
-            	setTimeout(()=>{
-                	window.location.replace("#!home");    
-                },150);
+            $("#bsExit").fadeIn();
+            setTimeout(()=>{
+                window.location.replace("#!home");    
+            },150);
+        }
+        
+        this.clearWatcher = ()=>{
+            if('geolocation' in navigator){
+                navigator.geolocation.clearWatch(this.positionWatcher);
+            }
         }
         
                 

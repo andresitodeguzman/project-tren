@@ -6,31 +6,25 @@
     <meta name="theme-color" content="#eeeeee">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-    <script type="text/javascript" src="assets/js/angular.min.js"></script>
-    <script type="text/javascript" src="assets/js/angular-animate.js"></script>
-    <script type="text/javascript" src="assets/js/angular-route.js"></script>
-    <script type="text/javascript" src="assets/js/angular-sanitize.js"></script>
-    <script type="text/javascript" src="assets/js/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="./assets/js/angular.min.js"></script>
+    <script type="text/javascript" src="./assets/js/angular-animate.js"></script>
+    <script type="text/javascript" src="./assets/js/angular-route.js"></script>
+    <script type="text/javascript" src="./assets/js/angular-sanitize.js"></script>
+    <script type="text/javascript" src="./assets/js/jquery-3.3.1.min.js"></script>
     
     <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="./assets/css/materialize.min.css">
     <link rel="stylesheet" href="./assets/fonts/iconfont/material-icons.css">
 
     <!-- Compiled and minified JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-      
+    <script src="./assets/js/materialize.min.js"></script>
+            
     <script>
         // Declare Global Data Here
     	window.data = {
             
             ui:{
-                dark:false
-            },
-            
-            recents: {
-                stationList:[
-                	{"id":3,"name":"Yamaha Monumento","short_name":"Monumento","system_id":1,"district":"Grace Park","city":"Caloocan","latitude":14.6543722,"longitude":120.9817053,"is_terminal":"FALSE","northbound_next":2,"southbound_next":4,"is_transfer_station":"","transfer_stations":"","not_operational":""}
-                ]
+                dark:true
             }
             
         }; 
@@ -58,76 +52,66 @@
                 }
             },
             
-            setDark(){
-                window.data.ui.dark = true;
-                localStorage.setItem("project-tren-dark",true);
-                window.ui.update();
-            },
-            
-            setLight(){
-                window.data.ui.dark = false;
-                localStorage.setItem("project-tren-dark",false);
-                window.ui.update();
+            toggleDarkMode(){
+                var currentState = localStorage.getItem("project-tren-dark");
+                var setDark = ()=>{
+                    window.data.ui.dark = true;
+                    localStorage.setItem("project-tren-dark",true);
+                    window.ui.update();
+                }
+                
+                var setDarkOff = ()=>{
+                    window.data.ui.dark = false;
+                    localStorage.setItem("project-tren-dark",false);
+                    window.ui.update();
+                }
+                
+                if(currentState){
+                    if(currentState == false){
+                        setDarkOff();
+                    } else {
+                        setDark();
+                    }
+                } else {
+                    setDark();
+                }
             }
-            
+                       
         }
         
+        // Set stored data
         
-        if(localStorage.getItem("dark-mode")) window.data.ui.dark = localStorage.getItem("dark-mode");
-        
-        if(localStorage.getItem("recent-stations")) window.data.recents.stationList = JSON.parse(localStorage.getItem("recent-stations"));
-
+        if(localStorage.getItem("past-rides")) window.data.ride.pastRides = JSON.parse(localStorage.getItem("past-rides"));
+                
     </script>
-    <script type="text/javascript" src="./data/systems.js"></script>
-    <script type="text/javascript" src="./data/stations.js"></script>
       
-	<script type="text/javascript" src="./controllers/systems.js"></script>
-    <script type="text/javascript" src="./controllers/stations.js"></script>
-    <script type="text/javascript" src="./controllers/locations.js"></script>
+    <script src="./data/systems.js"></script>
+    <script src="./data/stations.js"></script>
+    <script src="./data/greetings.js"></script>
+    <script src="./data/ride.js"></script>
+      
+	<script src="./controllers/systems.js"></script>
+    <script src="./controllers/stations.js"></script>
+    <script src="./controllers/locations.js"></script>
+    <script src="./controllers/ride.js"></script>
             
-    <script type="text/javascript" src="./app/app.module.js"></script>
-    <script type="text/javascript" src="./app/app.config.js"></script>
+    <script src="./app/app.module.js"></script>
+    <script src="./app/app.config.js"></script>
     
     <!-- shared -->
-    <script type="text/javascript" src="./app/shared/navbar/navbar.component.js"></script>
-    <script type="text/javascript" src="./app/shared/bottombar/bottombar.component.js"></script>
-    <script type="text/javascript" src="./app/shared/ridedash/ridedash.component.js"></script>
+    <script src="./app/shared/navbar/navbar.component.js"></script>
+    <script src="./app/shared/bottombar/bottombar.component.js"></script>
+    <script src="./app/shared/ridedash/ridedash.component.js"></script>
     
     <!-- Activity -->
-    <script type="text/javascript" src="./app/activity/home/home.component.js"></script>
-    <script type="text/javascript" src="./app/activity/ride/ride.component.js"></script>
-    <script type="text/javascript" src="./app/activity/more/more.component.js"></script>
-    <script type="text/javascript" src="./app/activity/system/system.component.js"></script>
-    
-    <style>
-    .slide-animate.ng-enter, .slide-animate.ng-leave{
- -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 2s;
-  -moz-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 2s;
-   -o-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 2s;
-      transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 2s;
- }
-
-
-.slide-animate.ng-enter.ng-enter-active {
- position: absolute;
- left: 1300px;
-}
-
-.slide-animate.ng-enter {
- left: 0;
-}
-
-.slide-animate.ng-leave.ng-leave-active {
- position: absolute;
- left: -1700px;
- }
-
-.slide-animate.ng-leave {
- right: 0;
- }
-  
-    </style>
-    
+    <script src="./app/activity/home/home.component.js"></script>
+    <script src="./app/activity/ride/ride.component.js"></script>
+    <script src="./app/activity/more/more.component.js"></script>
+    <script src="./app/activity/system/system.component.js"></script>
+    <script src="./app/activity/ridehistory/ridehistory.component.js"></script>
+    <script src="./app/activity/about/about.component.js"></script>
+	<script src="./app/activity/station/station.component.js"></script>
+      
   </head>
   <body class="grey lighten-4" ng-view></body>
 </html>

@@ -7,6 +7,8 @@ angular.module('system',[]).component('system',{
         this.currentSystem = false;
         this.stations = window.data.stations;
         this.systems = window.data.systems;
+        this.stationsC = window.stations;
+        this.systemsC = window.systems;
         
         // add all controller functions here
         this.$onInit = ()=>{
@@ -16,7 +18,7 @@ angular.module('system',[]).component('system',{
             	this.currentSystem =  window.systems.getById(this.currentId);
                 this.stations = window.stations.filter('system_id',this.currentId);
             }
-                                 
+                         
         };
         
         this.exit = ()=>{

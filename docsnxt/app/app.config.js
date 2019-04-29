@@ -7,6 +7,9 @@ angular.module('projectTrenApp').config([
       .when('/ride',{template:"<ride></ride>"})
       .when('/more',{template:"<more></more>"})
       .when('/system',{template:"<system></system>"})
+      .when('/ride/history',{template:"<ridehistory></ridehistory>"})
+      .when('/about',{template:"<about></about>"})
+      .when('/station',{template:"<station></station>"})
       .otherwise('/');
   }
 ]);

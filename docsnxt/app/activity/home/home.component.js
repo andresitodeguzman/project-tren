@@ -4,10 +4,11 @@ angular.module('home',['navbar','bottombar']).component('home',{
   controller: function homeController(){
     // Some code here
     this.isDark  = window.data.ui.dark;
-    this.headerMessage = "Afternoon rush? We'll get home soon";
+    this.headerMessage = "Zzzzz.";
     this.stations = window.data.stations;
     this.systems = window.data.systems;
-    this.recentStations = window.data.recents.stationList;
+    this.recentStations = window.data.ride.pastRides;
+    this.nearestStations = [];
       
     this.sList = [];
     this.sList.lrt1 = (this.stations.filter(obj=>{if(obj.system_id == 1) return obj})).slice(0,5);
@@ -16,6 +17,27 @@ angular.module('home',['navbar','bottombar']).component('home',{
       
     this.$onInit = ()=>{        
       window.ui.update();
+      if('geolocation' in navigator){          
+          navigator.geolocation.getCurrentPosition(succ=>{
+              window.data.ride.currentCoursePosition = succ.coords;
+             this.nearestStations = window.stations.nearbyStations(succ.coords.latitude,succ.coords.longitude);
+          }, err=>{
+              console.log(err);
+          });
+      }
+        
+      setTimeout(()=>{
+          if('geolocation' in navigator){
+              navigator.geolocation.getCurrentPosition(succ=>{
+                  
+                  console.log(succ);
+                  
+              },err=>{
+                 console.log(err); 
+              });
+          }
+      },40000);  
+        
     };
 
   this.hideModal = (ans)=>{

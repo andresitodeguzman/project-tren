@@ -1,3 +1,5 @@
+if(!window.data) window.data = {};
+
 window.data.stations = [
   {
     "id": 1,

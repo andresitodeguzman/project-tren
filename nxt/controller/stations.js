@@ -1,25 +1,22 @@
 window.stations = {
-    
-    data(){
-        if(!window.data.stations){
-            return [];
-        } else {
-            return window.data.stations;
-        }
-    },
-    
-    find(key,value){
-        return this.data().find(obj=>{
-            if(obj[key] == value) return obj;
-        });
-    },
-    
-    filter(key,value){
-        return this.data().filter(obj=>obj[key] == value);
+  
+    // gets all
+    get(){
+        return window.data.stations;
     },
     
     getById(id){
-        return this.find('id',id);
+        return window.data.stations[id];
+    },
+    
+    // returns obj based on key-value
+    find(key,value){
+        return (this.get()).find(obj=>{if(obj[key] == value) return obj;});
+    },
+    
+    // filters based on key-value
+    filter(key,value){
+        return (this.get().filter(obj=>{if(obj[key] == value) return obj;}));
     },
     
     degToRad(i){
@@ -44,7 +41,7 @@ window.stations = {
     
     getDistances(lat,lon){
         var list = [];
-        window.data.stations.forEach(obj=>{
+        this.get.forEach(obj=>{
             obj.distance = this.PythagorasEquirectangular(lat,lon,obj.latitude,obj.longitude);
             list.push(obj);
         });
@@ -88,5 +85,38 @@ window.stations = {
         } else {
             return [];
         }
+    },
+    
+    route(from_id,to_id){
+        var from = this.getById(from_id);
+        var to = this.getById(to_id);
+        
+       	if(from.system_id == to.system_id){
+            //get next stations
+            var slist = this.filter('system_id',from.system_id);
+            // loop then move northbound 
+        } else{
+            // locate transfer station of next station
+            console.log("not same station");
+        }
+    },
+    
+    routeLocalSystem(from,to){
+        var from = this.getById(from_id);
+        var to = this.getById(to_id);
+        
+        var slist = this.filter('system_id',from.system_id);
+        var nbFltr = slist;
+        var sbFltr = slist;
+        var nbPtr = null;
+        var sbPtr = null;
+        
+        while(nbPtr.id !== to.id){
+            
+        }
+        
+       	//move nb
+        //move sb
     }
+    
 };

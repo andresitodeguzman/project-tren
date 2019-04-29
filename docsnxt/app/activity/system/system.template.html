@@ -82,7 +82,7 @@ div.horizontal-scroll {
     </nav>
     
     <div class="container">
-        <h4 ng-if="$ctrl.isDark == false" class="grey-text text-darken-2">Philippine Train System</h4>
+        <h4 ng-if="$ctrl.isDark == false" class="grey-text text-darken-2" id="title">Philippine Train System</h4>
         <h4 ng-if="$ctrl.isDark == true" class="white-text">Philippine Train System</h4>
         <br><br>
     </div>
@@ -92,19 +92,25 @@ div.horizontal-scroll {
                <h1 ng-if="$ctrl.isDark == true" class="circle-title white-text">All Stations</h1>
                
            </a> 
-           <a ng-repeat="sys in $ctrl.systems" href="#!system?id={{sys.id}}">
-                <h1 ng-if="$ctrl.isDark == false" class="circle-title">{{sys.short_name}}</h1>
-               <h1 ng-if="$ctrl.isDark == true" class="circle-title white-text">{{sys.short_name}}</h1>
+           <a ng-repeat="sys in $ctrl.systems" href="#!station?id={{sys.id}}">
+                <h1 ng-if="$ctrl.isDark == false" class="circle-title">{{sys.short_name}}
+               </h1>
+               <h1 ng-if="$ctrl.isDark == true" class="circle-title white-text">{{sys.short_name}}
+               </h1>
             </a>
         </div>
     <br><br>
     <ul class="collection">
         <span ng-repeat="s in $ctrl.stations" style="line-height:0px;">
-            <a href="#!system?id={{s.id}}">
+            <a href="#!station?id={{s.id}}">
         	<li class="collection-item transparent">
                 <h5 class="grey-text text-darken-4">
-                    <strong ng-if="$ctrl.isDark == false">{{s.name}}</strong>
-                    <strong ng-if="$ctrl.isDark == true" class="white-text">{{s.name}}</strong>
+                    <strong ng-if="$ctrl.isDark == false">
+                        {{s.name}} <span ng-if="s.is_terminal == 'FALSE'">Station</span><span ng-if="s.is_terminal == 'TRUE'">Terminal</span>
+                    </strong>
+                    <strong ng-if="$ctrl.isDark == true" class="white-text">
+                        {{s.name}} <span ng-if="s.is_terminal == 'FALSE'">Station</span><span ng-if="s.is_terminal == 'TRUE'">Terminal</span>
+                    </strong>
                 </h5>
                 <p class="grey-text text-darken-2" ng-if="$ctrl.isDark == false">
                     {{s.district}}
@@ -118,6 +124,22 @@ div.horizontal-scroll {
                     <span ng-if="s.system_id == 2"><br>LRT 2</span>
                     <span ng-if="s.system_id == 3"><br>MRT 3</span>
                 </p>
+                
+                <span ng-if="s.is_transfer_station == 'true'" ng-repeat="ts in s.transfer_stations">                    
+                	<span class="chip yellow darken-3 white-text" ng-if="($ctrl.stationsC.getById(ts)).system_id == 1">
+                        <i class="tiny material-icons">
+transfer_within_a_station</i> {{($ctrl.stationsC.getById(ts)).name}} ({{($ctrl.systemsC.getById(($ctrl.stationsC.getById(ts)).system_id)).short_name}})
+                    </span>
+                    <span class="chip purple darken-2 white-text" ng-if="($ctrl.stationsC.getById(ts)).system_id == 2">
+                        <i class="tiny material-icons">
+transfer_within_a_station</i> {{($ctrl.stationsC.getById(ts)).name}} ({{($ctrl.systemsC.getById(($ctrl.stationsC.getById(ts)).system_id)).short_name}})
+                    </span>
+                    <span class="chip blue darken-2 white-text" ng-if="($ctrl.stationsC.getById(ts)).system_id == 3">
+                        <i class="tiny material-icons">
+transfer_within_a_station</i> {{($ctrl.stationsC.getById(ts)).name}} ({{($ctrl.systemsC.getById(($ctrl.stationsC.getById(ts)).system_id)).short_name}})
+                    </span>                    
+                </span>
+                
             </li>
             </a>
         </span>
@@ -153,11 +175,15 @@ div.horizontal-scroll {
     <br><br>
     <ul class="collection">
         <span ng-repeat="s in $ctrl.stations" style="line-height:0px;">
-            <a href="#!system?id={{s.id}}">
+            <a href="#!station?id={{s.id}}">
         	<li class="collection-item transparent">
                 <h5 class="grey-text text-darken-4">
-                    <strong ng-if="$ctrl.isDark == false">{{s.name}}</strong>
-                    <strong ng-if="$ctrl.isDark == true" class="white-text">{{s.name}}</strong>
+                    <strong ng-if="$ctrl.isDark == false">
+                        {{s.name}} <span ng-if="s.is_terminal == 'FALSE'">Station</span><span ng-if="s.is_terminal == 'TRUE'">Terminal</span>
+                    </strong>
+                    <strong ng-if="$ctrl.isDark == true" class="white-text">
+                        {{s.name}} <span ng-if="s.is_terminal == 'FALSE'">Station</span><span ng-if="s.is_terminal == 'TRUE'">Terminal</span>
+                    </strong>
                 </h5>
                 <p class="grey-text text-darken-2" ng-if="$ctrl.isDark == false">
                     {{s.district}}
@@ -171,6 +197,20 @@ div.horizontal-scroll {
                     <span ng-if="s.system_id == 2"><br>LRT 2</span>
                     <span ng-if="s.system_id == 3"><br>MRT 3</span>
                 </p>
+                <span ng-if="s.is_transfer_station == 'true'" ng-repeat="ts in s.transfer_stations">                    
+                	<span class="chip yellow darken-3 white-text" ng-if="($ctrl.stationsC.getById(ts)).system_id == 1">
+                        <i class="tiny material-icons">
+transfer_within_a_station</i> {{($ctrl.stationsC.getById(ts)).name}} ({{($ctrl.systemsC.getById(($ctrl.stationsC.getById(ts)).system_id)).short_name}})
+                    </span>
+                    <span class="chip purple darken-2 white-text" ng-if="($ctrl.stationsC.getById(ts)).system_id == 2">
+                        <i class="tiny material-icons">
+transfer_within_a_station</i> {{($ctrl.stationsC.getById(ts)).name}} ({{($ctrl.systemsC.getById(($ctrl.stationsC.getById(ts)).system_id)).short_name}})
+                    </span>
+                    <span class="chip blue darken-2 white-text" ng-if="($ctrl.stationsC.getById(ts)).system_id == 3">
+                        <i class="tiny material-icons">
+transfer_within_a_station</i> {{($ctrl.stationsC.getById(ts)).name}} ({{($ctrl.systemsC.getById(($ctrl.stationsC.getById(ts)).system_id)).short_name}})
+                    </span>                    
+                </span>                
             </li>
             </a>
         </span>
