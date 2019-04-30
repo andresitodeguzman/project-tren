@@ -4,7 +4,7 @@ angular.module('home',['navbar','bottombar']).component('home',{
   controller: function homeController(){
     // Some code here
     this.isDark  = window.data.ui.dark;
-    this.headerMessage = "Zzzzz.";
+    this.headerMessage = "Morning is surely great!";
     this.stations = window.data.stations;
     this.systems = window.data.systems;
     this.recentStations = window.data.ride.pastRides;

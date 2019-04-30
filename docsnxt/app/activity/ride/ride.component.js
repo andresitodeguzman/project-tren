@@ -22,6 +22,8 @@ angular.module('ride',['ridedash']).component('ride',{
                     window.ride.updateCurrent(succ.coords);
                     this.currentStation = window.stations.nearestOne(succ.coords.latitude,succ.coords.longitude);
                     
+                    console.log(JSON.stringify(succ));
+                    $(".currentStation").html(`${this.currentStation.name} Station`);
                     console.log(this.currentStation);
                     if(!this.currentStation){
                         if(!window.data.ride.currentStation){
