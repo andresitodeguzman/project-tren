@@ -6,7 +6,7 @@
     <title>Project Tren</title>
     <meta name="Description" content="Track and share at which exact LRT-1 station you're nearby with Project Tren!">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#eeeeee">
+    <meta name="theme-color" content="#eeee">
     <link rel="manifest" href="manifest.json">
     <script type="text/javascript">
         if('serviceWorker' in navigator){
@@ -33,6 +33,7 @@
             overscroll-behavior:none; 
         }
         .preloader {
+            background-color:#ffc000 !important;
             height:100% !important;
             width:100% !important;
             position:fixed !important;
@@ -42,7 +43,7 @@
             position:relative !important;
             top:45% !important;
             margin:0px !important;
-            color:black !important;
+            color:white !important;
             font-size:20pt !important;
             font-family: Arial, sans-serif !important;
         }
@@ -85,17 +86,23 @@
         }
         
         .card {
-	        border-radius: 12px !important;
-		    box-shadow: 0 20px 40px rgba(150, 150, 150, 0.2) !important;
+	        border-radius: 40px !important;
+		    box-shadow: 0 0px 0px rgba(150, 150, 150, 0.2) !important;
 	    }
         div.card-action {
-        	border-radius: 0px 0px 12px 12px !important;
+        	border-radius: 0px 0px 40px 40px !important;
     	}
+        
+        .modal {
+         border-radius: 30px !important;   
+         outline:none;
+        }
+        
     </style>
 </head>
 <body class="grey lighten-4">
     <!--preloader-->
-    <div class="preloader grey lighten-4" id="preloader">
+    <div class="preloader" id="preloader">
         <h3 id="preloaderTitle">
             <center>
                 Project Tren<br><br>
@@ -108,9 +115,9 @@
 
     <!--mainActivity-->
     <div class="activity" id="mainActivity">
-        <div class="navbar-fixed nav-wrapper">
+        <div class="navbar-fixed nav-wrapper" id="navbar">
             <nav class="grey lighten-4 z-depth-0">
-                    <a class="brand-logo left" href="#!"><i class="material-icons">train</i> Project Tren</a>
+                    <a class="brand-logo left" style="font-weight:normal !important;" href="#!"><i class="material-icons">train</i> Project Tren</a>
                     <div class="right" style="padding-right:15px;">
                         <a href="#!" class="black-text dropdown-trigger" data-target="options"><i class="material-icons black-text">more_vert</i></a>
                     </div>
@@ -139,22 +146,38 @@
             </div>
         </div>
 
-        <div class="container"><br>
+        <div class="container" id="oneUIContentScreen"><br><br><br><br>
+            <center>
+                <h3>
+    	            Project Tren
+	            </h3>
+            </center>            
+            
+            <br><br><br><br>
+            	<a class="right dropdown-trigger" data-target="options"><i class="material-icons black-text">more_vert</i></a>
+            <br><br>
+        </div>
 
+        <div class="container">
             <h4 class="blue-grey-text text-darken-3">Your Places</h4>
             <a class="blue-grey-text text-darken-3 modal-trigger" href="#addMyPlacesModal"><i class="material-icons tiny">add</i> Add</i></a><br><br>
-
+        </div>
+            
             <div id="myplacesContainer"></div>
 
-            <br><br>
+            <br><br><br>
             
+    	<div class="container">
             <h4 class="blue-grey-text text-darken-3">Your Past Rides</h4>
             <a class="blue-grey-text text-darken-3" id="deleteAllPreviousRideButton"><i class="material-icons tiny">delete</i> Delete All</i></a><br><br>
-
+    	</div>
+            
             <div id="previousRideList"></div>
 
 
             <br><br><br><br>
+    <br><br><br><br>
+    <br><br><br><br>
         </div>
 
         <div class="fixed-action-btn">

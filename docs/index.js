@@ -13,6 +13,7 @@ $(document).ready(()=>{
     // Instantiate UI Elements
     $('.modal').modal();
     $('.dropdown-trigger').dropdown();
+    $("#navbar").hide();
 
     // Clear view
     clear();
@@ -24,6 +25,17 @@ $(document).ready(()=>{
     setStations();
     setMyPlaces();
     setPreviousRides();
+    
+    var sc = 0;
+    window.addEventListener('scroll',e=>{
+       if(window.scrollY > 300){
+           $("#navbar").fadeIn();
+       } else {
+           $("#navbar").fadeOut();
+       }
+        sc = window.scrollY;
+
+    });
 });
 
 $("#showChooserButton").click(()=>{
@@ -83,7 +95,7 @@ $("#deleteAllPreviousRideButton").click(()=>{
 
 $("#closeChooserButton").click(()=>{
     clear();
-    $("meta[name='theme-color']").attr("content","#ffc000");
+    $("meta[name='theme-color']").attr("content","#eeeeee");
     $("#showRideButton").show();
     showActivity("main");
 }); 
