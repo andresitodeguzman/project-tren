@@ -104,7 +104,7 @@ $("#showRideButton").click(()=>{
 
 $("#doneRideExitButton").click(()=>{
     clear();
-    $("meta[name='theme-color']").attr("content","#ffc000");
+    $("meta[name='theme-color']").attr("content","#eeeeee");
     showActivity('main');
 });
 
