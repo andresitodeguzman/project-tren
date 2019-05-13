@@ -84,6 +84,14 @@
             height:auto;
             width: 100%;
         }
+        
+        .card {
+	        border-radius: 12px !important;
+		    box-shadow: 0 20px 40px rgba(150, 150, 150, 0.2) !important;
+	    }
+        div.card-action {
+        	border-radius: 0px 0px 12px 12px !important;
+    	}
     </style>
 </head>
 <body class="grey lighten-4">
@@ -102,7 +110,7 @@
     <!--mainActivity-->
     <div class="activity" id="mainActivity">
         <div class="navbar-fixed nav-wrapper">
-            <nav class="primarycolor z-depth-0">
+            <nav class="grey lighten-4 z-depth-0">
                     <a class="brand-logo left" href="#!"><i class="material-icons">train</i> Project Tren</a>
                     <div class="right" style="padding-right:15px;">
                         <a href="#!" class="black-text dropdown-trigger" data-target="options"><i class="material-icons black-text">more_vert</i></a>
@@ -120,7 +128,7 @@
             <div class="modal-content">
                 <h5>About App</h5><br>
                 <p>
-                    Andresito de Guzman 2018<br>
+                    Andresito de Guzman 2018-2019<br>
                     <br>
                     This is still an experimental technology, it is always recommended to always check manually what station you are in right now as a precaution because geolocaion fails sometimes or is not accurate. Data that are derived and estimated might not be accurate and should not be used as a basis for determining metrics. The app developer is not liable of any damages that might occur for relying on the given estimates.
                     <br><br>
@@ -134,15 +142,15 @@
 
         <div class="container"><br>
 
-            <h5 class="blue-grey-text text-darken-3">My Places</h5>
-            <a class="blue-grey-text text-darken-3 modal-trigger" href="#addMyPlacesModal"><i class="material-icons tiny">add</i> Add</i></a>
+            <h4 class="blue-grey-text text-darken-3">Your Places</h4>
+            <a class="blue-grey-text text-darken-3 modal-trigger" href="#addMyPlacesModal"><i class="material-icons tiny">add</i> Add</i></a><br><br>
 
             <div id="myplacesContainer"></div>
 
             <br><br>
             
-            <h5 class="blue-grey-text text-darken-3">Previous Rides</h5>
-            <a class="blue-grey-text text-darken-3" id="deleteAllPreviousRideButton"><i class="material-icons tiny">delete</i> Delete All</i></a>
+            <h4 class="blue-grey-text text-darken-3">Your Past Rides</h4>
+            <a class="blue-grey-text text-darken-3" id="deleteAllPreviousRideButton"><i class="material-icons tiny">delete</i> Delete All</i></a><br><br>
 
             <div id="previousRideList"></div>
 
@@ -151,7 +159,7 @@
         </div>
 
         <div class="fixed-action-btn">
-            <a class="btn-floating btn-large primarycolor" href="#!" id="showChooserButton">
+            <a class="btn-floating btn-large primarycolor z-depth-5" href="#!" id="showChooserButton">
                 <i class="material-icons black-text">add_location</i>
             </a>
         </div>
@@ -199,7 +207,7 @@
     <!--.mainActivity-->
 
     <!--chooserActivity-->
-    <div class="activity blue-grey" id="chooserActivity" style="position:fixed; width:100%; height:100%;">
+    <div class="activity blue-grey darken-3" id="chooserActivity" style="position:fixed; width:100%; height:100%;">
         <div class="navbar-fixed nav-wrapper">
             <nav class="z-depth-0 transparent">
                 <a class="right" href="#!" id="closeChooserButton" style="padding-right:15px;"><i class="material-icons">close</i></a>
@@ -209,8 +217,7 @@
             <br><br>
             <div class="card z-depth-4 hoverable">
                 <div class="card-content" id="chooserCardContent">
-                    <span class="card-title">
-                        Good day!<br>
+                    <span class="card-title">                        
                         Choose your destination
                     </span><br>
                     <p>From</p>
@@ -226,7 +233,7 @@
             <br><br><br><br><br>
         </div>
         <div class="fixed-action-btn">
-            <a class="btn-floating btn-large primarycolor" href="#!" id="showRideButton">
+            <a class="btn-floating z-depth-5 btn-large primarycolor" href="#!" id="showRideButton">
                 <i class="material-icons black-text">arrow_forward</i>
             </a>
         </div>
