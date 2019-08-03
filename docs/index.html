@@ -30,7 +30,24 @@
             padding:0px;
             width:100%;
             height:100%;
-            overscroll-behavior:none; 
+            overscroll-behavior:none;
+            background-color: #f5f5f5;
+        }
+        a {
+            color: black !important;
+        }
+        h4 {
+            color: #37474f !important;
+        }
+        nav {
+            background-color: #f5f5f5 !important;
+            font-weight:normal !important;
+        }
+        #chooserActivity {
+            background-color: #607d8b !important;
+        }
+        #rideActivity {
+            background-color: #455a64 !important;
         }
         .preloader {
             background-color:#ffc000 !important;
@@ -99,18 +116,45 @@
         }
         
         @media (prefers-color-scheme: dark){
+            .preloader {
+                background-color: #262626 !important;
+            }
             body {
-                background-color: #263238 !important;
+                background-color: #262626 !important;
+            }
+            #chooserActivity {
+                background-color: #262626 !important;
+            }
+            #rideActivity {
+                background-color: #262626 !important;
             }
             nav {
-                background-color: #263238 !important;
+                background-color: #262626 !important;
+            }
+            nav > a {
+                color: white !important;
+            }
+            .card {
+                background-color: #4c4c4c !important;
+            }
+            h3 {
+                color: white !important;
+            }
+            a {
+                color: white !important;
+            }
+            h4 {
+                color: white !important;
+            }
+            h5 {
+                color: grey !important;
             }
             
         }
         
     </style>
 </head>
-<body class="grey lighten-4">
+<body>
     <!--preloader-->
     <div class="preloader" id="preloader">
         <h3 id="preloaderTitle">
@@ -126,8 +170,8 @@
     <!--mainActivity-->
     <div class="activity" id="mainActivity">
         <div class="navbar-fixed nav-wrapper" id="navbar">
-            <nav class="grey lighten-4 z-depth-0">
-                    <a class="brand-logo left" style="font-weight:normal !important;" href="#!"><i class="material-icons">train</i> Project Tren</a>
+            <nav class="z-depth-0">
+                    <a class="brand-logo left" href="#!"><i class="material-icons">train</i> Project Tren</a>
                     <div class="right" style="padding-right:15px;">
                         <a href="#!" class="black-text dropdown-trigger" data-target="options"><i class="material-icons black-text">more_vert</i></a>
                     </div>
@@ -164,13 +208,13 @@
             </center>            
             
             <br><br><br><br>
-            	<a class="right dropdown-trigger" data-target="options"><i class="material-icons black-text">more_vert</i></a>
+            	<a class="right dropdown-trigger" data-target="options"><i class="material-icons">more_vert</i></a>
             <br><br>
         </div>
 
         <div class="container">
-            <h4 class="blue-grey-text text-darken-3">Your Places</h4>
-            <a class="blue-grey-text text-darken-3 modal-trigger" href="#addMyPlacesModal"><i class="material-icons tiny">add</i> Add</a><br><br>
+            <h4>Your Places</h4>
+            <a href="#addMyPlacesModal"><i class="material-icons tiny">add</i> Add</a><br><br>
         </div>
             
             <div id="myplacesContainer"></div>
@@ -178,8 +222,8 @@
             <br><br><br>
             
     	<div class="container">
-            <h4 class="blue-grey-text text-darken-3">Your Past Rides</h4>
-            <a class="blue-grey-text text-darken-3" id="deleteAllPreviousRideButton"><i class="material-icons tiny">delete</i> Delete All</a><br><br>
+            <h4>Your Past Rides</h4>
+            <a id="deleteAllPreviousRideButton"><i class="material-icons tiny">delete</i> Delete All</a><br><br>
     	</div>
             
             <div id="previousRideList"></div>
@@ -240,7 +284,7 @@
     <!--.mainActivity-->
 
     <!--chooserActivity-->
-    <div class="activity blue-grey darken-3" id="chooserActivity" style="position:fixed; width:100%; height:100%;">
+    <div class="activity" id="chooserActivity" style="position:fixed; width:100%; height:100%;">
         <div class="navbar-fixed nav-wrapper">
             <nav class="z-depth-0 transparent">
                 <a class="right" href="#!" id="closeChooserButton" style="padding-right:15px;"><i class="material-icons">close</i></a>
@@ -274,7 +318,7 @@
     <!--.chooserActivity-->
 
     <!--rideActivity-->
-    <div class="activity blue-grey darken-2" id="rideActivity"  style="position:fixed; width:100%; height:100%;">
+    <div class="activity" id="rideActivity"  style="position:fixed; width:100%; height:100%;">
         <div class="navbar-fixed nav-wrapper">
             <nav class="z-depth-0 transparent">
                 <a class="right" href="#!" id="closeRideButton" style="padding-right:15px;"><i class="material-icons">close</i></a>
