@@ -398,14 +398,7 @@ var ride = (from_id,to_id)=>{
             var yr = date.getFullYear();
             var inst = `${dte} ${dy}, ${yr}`;
 
-            addToPreviousRides(from.name,to.name,inst);
-
-            try {
-                db.ref(`/ride/${localStorage.getItem('user-id')}`).remove();
-            } catch(e) {
-                console.log(e);
-            }
-            
+            addToPreviousRides(from.name,to.name,inst);            
         }
 
         // Declare for use later
