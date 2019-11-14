@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Project Tren</title>
+    <script type="text/javascript">
+      if('serviceWorker' in navigator){
+          navigator.serviceWorker.register('/project-tren/serviceworker.js',{scope:'/project-tren/'}).then(reg=>{
+              console.log('SW Log: Registration was Successful');
+          }).catch(err=>{
+              var error = err;
+              console.log(`SW Log: [Error] ${error}`);
+          });
+      } else {
+          console.log(`SW Log: [Error] Feature Not Available on this Browser`);
+      }
+  </script>
+    <meta name="Description" content="Track and share at which exact LRT-1 station you're nearby with Project Tren!">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#455a64">
+  </head>
+  <style>
+      :root {
+        font-display:auto !important;    
+      }
+      
+      body {
+          margin:0px;
+          padding:0px;
+          width:100%;
+          height:100%;
+          overscroll-behavior:none;
+          background-color: #f5f5f5;
+      }
+      a {
+          color: black !important;
+      }
+      h4 {
+          color: #37474f !important;
+      }
+      nav {
+          background-color: #f5f5f5 !important;
+          font-weight:normal !important;
+      }
+      #chooserActivity {
+          background-color: #607d8b !important;
+      }
+      #rideActivity {
+          background-color: #455a64 !important;
+      }
+      .preloader {
+          background-color:#ffc000 !important;
+          height:100% !important;
+          width:100% !important;
+          position:fixed !important;
+          z-index: 99999;
+      }
+      #preloaderTitle {
+          position:relative !important;
+          top:45% !important;
+          margin:0px !important;
+          color:white !important;
+          font-size:20pt !important;
+          font-family: Arial, sans-serif !important;
+      }
+      .loader {
+          border: 3px solid #f3f3f3 !important;
+          border-top: 3px solid #607d8b !important;
+          border-radius: 50% !important;
+          width: 25px !important;
+          height:25px !important;
+          animation: spin 2s linear infinite !important;
+      }
+      @keyframes spin {
+          0% {
+              transform: rotate(0deg);
+          }
+          100% {
+              transform: rotate(360deg);
+          }
+      }
+      .primarycolor {
+          background-color:#ffc000 !important;
+      }
+      .brand-logo {
+          font-size:15pt !important;
+          font-weight: bold !important;
+          color:#3a3939 !important;
+          padding-left:15px !important;
+      }
+      .activity {
+          height:100%;
+          width:100%;
+      }
+
+      footer {
+          position: fixed !important;
+          padding-left:10%;
+          bottom: 4%;
+          height:auto;
+          width: 100%;
+      }
+      
+      .card {
+        border-radius: 40px !important;
+      box-shadow: 0 0px 0px rgba(150, 150, 150, 0.2) !important;
+    }
+      div.card-action {
+        border-radius: 0px 0px 40px 40px !important;
+    }
+      
+      .modal {
+       border-radius: 30px !important;   
+       outline:none;
+      }
+      
+      @media (prefers-color-scheme: dark){
+          .preloader {
+              background-color: #262626 !important;
+          }
+          body {
+              background-color: #262626 !important;
+          }
+          #chooserActivity {
+              background-color: #262626 !important;
+          }
+          #rideActivity {
+              background-color: #262626 !important;
+          }
+          nav {
+              background-color: #262626 !important;
+          }
+          nav > a {
+              color: white !important;
+          }
+          .card {
+              background-color: #4c4c4c !important;
+          }
+          h3 {
+              color: white !important;
+          }
+          a {
+              color: white !important;
+          }
+          h4 {
+              color: white !important;
+          }
+          h5 {
+              color: grey !important;
+          }
+          .modal {
+              background-color: #4c4c4c !important;
+          }
+          .modal-footer {
+              background-color: #4c4c4c !important;
+          }
+          input {
+              color: white;
+          }
+          
+      }
+      
+  </style>
+  <body style="background-color: #455a64">
+    <!--preloader-->
+    <div class="preloader" id="preloader">
+        <h3 id="preloaderTitle">
+            <center>
+                <b>Project Tren</b> Share<br><br>
+                <div class="loader"></div>
+                <noscript>Javascript must be turned on</noscript>
+            </center>
+        </h3>
+    </div>
+    <!--.preloader-->
+
+    <div class="activity" id="homeActivity">
+      <div class="container"><br><br><br>
+          <h5>
+              <a href="#stationsModal" class="modal-trigger yellow-text text-darken-3"><center><span id="rideFromName">From</span> → <span id="rideToName">To</span></center></a>
+          </h5><br>
+        <center>
+            <font class="grey-text text-lighten-2">Your friend is now at</font>
+            <h3 class="white-text" id="rideCurrentStation">
+                <b><span id="rideCurrentStationName">Loading...</span> <span id="rideStationWord"></span></b>
+            </h3>
+            <font class="grey-text grey-text text-lighten-3">Next: <span id="rideNextStation">Unknown Station</span></font>
+        </center>
+        <footer>
+            <p class="grey-text text-lighten-1">
+                <i class="material-icons tiny grey-text text-lighten-1">timer</i> ~<span id="rideApproximate">0</span> mins left<br>
+                <i class="material-icons tiny grey-text text-lighten-1">near_me</i> <span id="rideDistance">0</span> kms<br>
+                <i class="material-icons tiny grey-text text-lighten-1">train</i> <span id="rideSpeed">0</span> m/s<br>
+            </p>
+        </footer>
+      </div>
+
+      <div class="modal modal-fixed-footer" id="stationsModal">
+          <div class="modal-content">
+              <h5 class="blue-grey-text text-darken-4">LRT Line 1 Stations</h5>
+              <p>From northbound to southbound</p>
+              <br>
+              <ul id="stationsModalList" class="collection"></ul>
+          </div>
+          <div class="modal-footer">
+              <a href="#!" class="modal-close waves-effect waves-red btn-flat">Close</a>
+          </div>
+      </div>
+
+    </div>
+
+    <!--doneRideActivity-->
+    <div class="activity primarycolor" id="doneRideActivity"  style="position:fixed; width:100%; height:100%;"><br><br><br>
+      <div class="container">
+            <center>
+                <h4 class="black-text">
+                    <i class="material-icons large nlack-text">mood</i><br>
+                    Your friend is now approching the station in a few seconds!
+                </h4>
+                <br><br>
+                <a class="btn btn-large blue-grey darken-1" href="/">Okay, Thanks!</a>
+            </center>
+        </div>
+    </div>
+    <!--.doneRideActivity-->
+
+  </body>
+</html>
+<script type="text/javascript" src="assets/js/jquery.min.js" defer></script>
+<script type="text/javascript" src="assets/materialize/js/materialize.min.js" defer></script>
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.3.0/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.3.0/firebase-analytics.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.3.0/firebase-database.js"></script>
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyDeJDduG8zglOWhDEuCNHxaUAv61kuTZng",
+    authDomain: "p-tren.firebaseapp.com",
+    databaseURL: "https://p-tren.firebaseio.com",
+    projectId: "p-tren",
+    storageBucket: "p-tren.appspot.com",
+    messagingSenderId: "723245938214",
+    appId: "1:723245938214:web:52b8e860e4fd12532ed8e7",
+    measurementId: "G-H7ZSELE31Y"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+</script>
+<script type="text/javascript" src="LocationHelper.js" defer></script>
+<script type="text/javascript" src="data.js" defer></script>
+<script>
+  //PRPL
+  window.onload = ev=>{
+      var css = [
+          "assets/materialize/css/materialize.min.css",
+          "assets/fonts/iconfont/material-icons.css"
+      ];
+      var scripts = [
+          "share.js"
+      ];
+
+      css.forEach(elem=>{
+          var s = document.createElement("link");
+          s.rel = "stylesheet";
+          s.href = elem;
+          document.head.appendChild(s);
+      });
+
+      scripts.forEach(elem=>{
+          var s = document.createElement("script");
+          s.type = "text/javascript";
+          s.defer = true;
+          s.src = elem;
+          document.head.appendChild(s);
+      });
+  };
+</script>

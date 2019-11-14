@@ -6,7 +6,8 @@
  */
 
 // Initiate Library Helper
-let __locationHelper = new LocationHelper();
+const __locationHelper = new LocationHelper();
+const db = firebase.database();
 
 // Initialization scripts
 $(document).ready(()=>{   
@@ -25,6 +26,8 @@ $(document).ready(()=>{
     setStations();
     setMyPlaces();
     setPreviousRides();
+
+    setUserId();
     
     var sc = 0;
     window.addEventListener('scroll',e=>{
@@ -36,6 +39,23 @@ $(document).ready(()=>{
         sc = window.scrollY;
 
     });
+});
+
+$("#shareRideButton").click(()=>{
+    if(navigator.share){
+        var nearest = JSON.parse(localStorage.getItem('nearest'));
+        navigator.share({
+            title: `I'm currently at ${nearest.name} Station of LRT-1`,
+            text: `I just wanted to let you know that I am currently at ${nearest.name}. You may also track and share at which exact @officialLRT1 station you're nearby with Project Tren!`,
+            url: `https://andresito.xyz/project-tren/share.html?id=${userId}`
+        })
+            .then(()=>{
+                M.toast({html:"Succcessfully shared your current location!",durationLength:3000});
+            })
+            .catch();
+    } else {
+        M.toast({html:"Share isn't available on your device",durationLength:3000});
+    }
 });
 
 $("#showChooserButton").click(()=>{
@@ -128,6 +148,16 @@ let clear = ()=>{
 let showActivity = (title)=>{
     $(`#${title}Activity`).fadeIn();
 };
+
+let setUserId = ()=>{
+    var uid = localStorage.getItem('user-id');
+    if(!uid) {
+        let uid = Math.random().toString(36).substring(2) + Date.now().toString(36);
+        localStorage.setItem('user-id', uid);
+        return uid;
+    }
+    return uid;
+}
 
 let setStations = ()=>{
     $("#needsStations").html("");
@@ -339,21 +369,7 @@ var ride = (from_id,to_id)=>{
         // Remove unecessary trailing numbers w/o rounding it off
         appx = Math.trunc(appx);
 
-        $("#shareRideButton").click(()=>{
-            if(navigator.share){
-                navigator.share({
-                    title: `I'm currently at ${nearest.name} Station of LRT-1`,
-                    text: `I just wanted to let you know that I am currently at ${nearest.name}. You may also track and share at which exact @officialLRT1 station you're nearby with Project Tren!`,
-                    url: "https://bit.ly/project-tren"
-                })
-                    .then(()=>{
-                        M.toast({html:"Succcessfully shared your current location!",durationLength:3000});
-                    })
-                    .catch();
-            } else {
-                M.toast({html:"Share isn't available on your device",durationLength:3000});
-            }
-        });
+        localStorage.setItem('nearest',JSON.stringify(nearest));
 
         // Someting to do when user arrived at the destination
         if(nearest.id == to_id){
@@ -408,6 +424,17 @@ var ride = (from_id,to_id)=>{
             var nxt = findStationById(nearest.southbound_next);
             $("#rideNextStation").html(nxt.name);
         }
+
+        db.ref(`/ride/${localStorage.getItem('user-id')}`).set({
+            latitude: pos.coords.latitude,
+            longitude: pos.coords.longitude,
+            bound: bt,
+            from_id: from.id,
+            to_id: to.id,
+            speed: Math.trunc(pos.coords.speed),
+            distance: Math.trunc(dist),
+            approximate: appx
+        });
         
         if(csn != nearest.name){
             $("#rideCurrentStation").hide();
@@ -528,4 +555,8 @@ var getPreLocationMessage = ()=>{
 
 var setPreLocationMessage = (msg)=>{
   localStorage.setItem("tren-prelocation-msg",msg);
+}
+
+var shareLocation = ()=> {
+    var db = firebase.database();    
 }
