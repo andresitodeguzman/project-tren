@@ -7,11 +7,7 @@
 
 // Initiate Library Helper
 const __locationHelper = new LocationHelper();
-try {
-    const db = firebase.database();
-} catch(e) {
-    console.log(e);
-}
+const db = firebase.database();
 
 
 // Initialization scripts
