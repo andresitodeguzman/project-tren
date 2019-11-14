@@ -69,7 +69,12 @@ db.ref(`/ride/${userId}`).on('value', res=>{
   var data = res.val();
   var nearest = __locationHelper.nearest(data.latitude,data.longitude,__stationList);
   
-  if(nearest.id == data.to_id){
+  if(nearest.id == data.to_id){\
+    try {
+      window.navigator.vibrate(1500);
+    } catch (error) {
+      console.log("Vibration is not supported in the device");
+    }
     clear();
     $("meta[name='theme-color']").attr("content","#ffc000");
     showActivity('doneRide');

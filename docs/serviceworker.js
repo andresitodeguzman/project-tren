@@ -1,7 +1,7 @@
 'use strict';
 
-let cn = '1.14';
-let cacheWhiteList = ['1.14'];
+let cn = '1.15';
+let cacheWhiteList = ['1.15'];
 let assetsList = [
     '/project-tren/index.html',
     'project-tren/share.html',
