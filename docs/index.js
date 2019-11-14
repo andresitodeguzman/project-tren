@@ -7,7 +7,12 @@
 
 // Initiate Library Helper
 const __locationHelper = new LocationHelper();
-const db = firebase.database();
+try {
+    const db = firebase.database();
+} catch(e) {
+    console.log(e);
+}
+
 
 // Initialization scripts
 $(document).ready(()=>{   
@@ -398,6 +403,13 @@ var ride = (from_id,to_id)=>{
             var inst = `${dte} ${dy}, ${yr}`;
 
             addToPreviousRides(from.name,to.name,inst);
+
+            try {
+                db.ref(`/ride/${localStorage.getItem('user-id')}`).remove();
+            } catch(e) {
+                console.log(e);
+            }
+            
         }
 
         // Declare for use later
@@ -425,17 +437,21 @@ var ride = (from_id,to_id)=>{
             $("#rideNextStation").html(nxt.name);
         }
 
-        db.ref(`/ride/${localStorage.getItem('user-id')}`).set({
-            latitude: pos.coords.latitude,
-            longitude: pos.coords.longitude,
-            bound: bt,
-            from_id: from.id,
-            to_id: to.id,
-            speed: Math.trunc(pos.coords.speed),
-            distance: Math.trunc(dist),
-            approximate: appx
-        });
-        
+        try {
+            db.ref(`/ride/${localStorage.getItem('user-id')}`).set({
+                latitude: pos.coords.latitude,
+                longitude: pos.coords.longitude,
+                bound: bt,
+                from_id: from.id,
+                to_id: to.id,
+                speed: Math.trunc(pos.coords.speed),
+                distance: Math.trunc(dist),
+                approximate: appx
+            });    
+        } catch(e) {
+            console.log(e);
+        }
+
         if(csn != nearest.name){
             $("#rideCurrentStation").hide();
             $("#rideCurrentStation").fadeIn();
@@ -555,8 +571,4 @@ var getPreLocationMessage = ()=>{
 
 var setPreLocationMessage = (msg)=>{
   localStorage.setItem("tren-prelocation-msg",msg);
-}
-
-var shareLocation = ()=> {
-    var db = firebase.database();    
 }

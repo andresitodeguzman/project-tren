@@ -9,7 +9,7 @@
 let __locationHelper = new LocationHelper();
 const db = firebase.database();
 var userId = findGetParameter('id');
-
+if(!userId) window.location.replace('/');
 $(document).ready(()=>{
   $('.modal').modal();
 
