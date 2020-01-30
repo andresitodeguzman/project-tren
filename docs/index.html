@@ -10,7 +10,7 @@
     <link rel="manifest" href="manifest.json">
     <script type="text/javascript">
         if('serviceWorker' in navigator){
-            navigator.serviceWorker.register('/project-tren/serviceworker.js',{scope:'/project-tren/'}).then(reg=>{
+            navigator.serviceWorker.register('/serviceworker.js',{scope:'/'}).then(reg=>{
                 console.log('SW Log: Registration was Successful');
             }).catch(err=>{
                 var error = err;
