@@ -8,6 +8,7 @@
 // Initiate Library Helper
 const __locationHelper = new LocationHelper();
 const db = firebase.database();
+sessionStorage.clear();
 window.wakelock = null;
 
 async function startWakelock() {
