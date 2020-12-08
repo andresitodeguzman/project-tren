@@ -324,10 +324,10 @@ var askRideMyPlaces = (id)=>{
     $("#rideMyPlacesModal").modal("open");
 }
 
-var ride = (from_id,to_id)=>{
+var ride = async (from_id,to_id) => {
     let wakelock = null;
     try {
-        wakelock = await navigator.wakeLock.request('screen');
+        wakelock = navigator.wakeLock.request('screen');
         wakelock.addEventListener('release', ()=> {
             console.log('wakelog released');
         });
