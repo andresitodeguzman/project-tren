@@ -36,6 +36,7 @@ window.wakelock.addEventListener('release', async () => {
 
 document.addEventListener("visibilitychange", async () => {
     if(!document.hidden && sessionStorage.getItem('r') === true) await startWakelock();
+    console.log('page visibility change');
     return;
 });
 
