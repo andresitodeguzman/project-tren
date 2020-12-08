@@ -325,6 +325,15 @@ var askRideMyPlaces = (id)=>{
 }
 
 var ride = (from_id,to_id)=>{
+    let wakelock = null;
+    try {
+        wakelock = await navigator.wakeLock.request('screen');
+        wakelock.addEventListener('release', ()=> {
+            console.log('wakelog released');
+        });
+    } catch(e) {
+        console.log(e);
+    }
     var from = findStationById(from_id);
     var to = findStationById(to_id);
 
@@ -374,6 +383,13 @@ var ride = (from_id,to_id)=>{
 
         // Someting to do when user arrived at the destination
         if(nearest.id == to_id){
+            if(wakelock) {
+                try {
+                    wakelock.release().then(() => { wakelock = null; });
+                } catch(e) {
+                    console.log(e);
+                }
+            }
             // Try to vibrate
             try {
                 window.navigator.vibrate(1500);
