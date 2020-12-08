@@ -408,7 +408,9 @@ var ride = async (from_id,to_id) => {
         // Someting to do when user arrived at the destination
         if(nearest.id == to_id){
             sessionStorage.setItem('r', false);
-            await releaseWakelock();
+            releaseWakelock().then(() => {
+                console.log('done ride releasing wakelock');
+            });
 
             // Try to vibrate
             try {
