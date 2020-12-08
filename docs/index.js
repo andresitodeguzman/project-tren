@@ -327,7 +327,8 @@ var askRideMyPlaces = (id)=>{
 var ride = async (from_id,to_id) => {
     let wakelock = null;
     try {
-        wakelock = navigator.wakeLock.request('screen');
+        wakelock = await navigator.wakeLock.request('screen');
+        console.log('done acquiring wakelock');
         wakelock.addEventListener('release', ()=> {
             console.log('wakelog released');
         });
