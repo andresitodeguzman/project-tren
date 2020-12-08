@@ -8,6 +8,36 @@
 // Initiate Library Helper
 const __locationHelper = new LocationHelper();
 const db = firebase.database();
+window.wakelock = null;
+
+async function startWakelock() {
+    try {
+        window.wakelock = navigator.wakeLock.request('screen');
+        console.log('wakelock acquired');
+    } catch(e) {
+        console.log(e);
+    }
+}
+
+async function releaseWakelock() {
+    try {
+        await window.wakelock.release();
+        console.log('wakelock released');
+    } catch(e) {
+        console.log(e);
+    }
+}
+
+window.wakelock.addEventListener('release', async () => {
+    console.log('wakelog release event');
+    return;
+});
+
+
+document.addEventListener("visibilitychange", () => {
+    if(!document.hidden && sessionStorage.getItem('r') === true)await startWakelock();
+    return;
+});
 
 
 // Initialization scripts
@@ -325,16 +355,8 @@ var askRideMyPlaces = (id)=>{
 }
 
 var ride = async (from_id,to_id) => {
-    let wakelock = null;
-    try {
-        wakelock = await navigator.wakeLock.request('screen');
-        console.log('done acquiring wakelock');
-        wakelock.addEventListener('release', ()=> {
-            console.log('wakelog released');
-        });
-    } catch(e) {
-        console.log(e);
-    }
+    await startWakelock();
+
     var from = findStationById(from_id);
     var to = findStationById(to_id);
 
@@ -359,7 +381,7 @@ var ride = async (from_id,to_id) => {
     if(!navigator.share){
         $("#shareRideButton").hide();
     }
-
+    sessionStorage.setItem('r', true);
     showActivity('ride');
 
     var successPosition = (pos)=>{
@@ -384,13 +406,9 @@ var ride = async (from_id,to_id) => {
 
         // Someting to do when user arrived at the destination
         if(nearest.id == to_id){
-            if(wakelock) {
-                try {
-                    wakelock.release().then(() => { wakelock = null; });
-                } catch(e) {
-                    console.log(e);
-                }
-            }
+            sessionStorage.setItem('r', false);
+            await releaseWakelock();
+
             // Try to vibrate
             try {
                 window.navigator.vibrate(1500);
