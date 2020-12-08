@@ -17,6 +17,11 @@ async function startWakelock() {
     } catch(e) {
         console.log(e);
     }
+
+    window.wakelock.addEventListener('release', async () => {
+        console.log('wakelog release event');
+        return;
+    });
 }
 
 async function releaseWakelock() {
@@ -27,12 +32,6 @@ async function releaseWakelock() {
         console.log(e);
     }
 }
-
-window.wakelock.addEventListener('release', async () => {
-    console.log('wakelog release event');
-    return;
-});
-
 
 document.addEventListener("visibilitychange", async () => {
     if(!document.hidden && sessionStorage.getItem('r') === true) await startWakelock();
