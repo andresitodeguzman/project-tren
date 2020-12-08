@@ -14,14 +14,13 @@ async function startWakelock() {
     try {
         window.wakelock = navigator.wakeLock.request('screen');
         console.log('wakelock acquired');
+        window.wakelock.addEventListener('release', async () => {
+            console.log('wakelog release event');
+            return;
+        });
     } catch(e) {
         console.log(e);
     }
-
-    window.wakelock.addEventListener('release', async () => {
-        console.log('wakelog release event');
-        return;
-    });
 }
 
 async function releaseWakelock() {
