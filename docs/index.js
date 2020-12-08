@@ -34,8 +34,8 @@ window.wakelock.addEventListener('release', async () => {
 });
 
 
-document.addEventListener("visibilitychange", () => {
-    if(!document.hidden && sessionStorage.getItem('r') === true)await startWakelock();
+document.addEventListener("visibilitychange", async () => {
+    if(!document.hidden && sessionStorage.getItem('r') === true) await startWakelock();
     return;
 });
 
