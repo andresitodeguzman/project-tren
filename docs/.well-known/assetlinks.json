@@ -1,5 +1,10 @@
 [{
-      "relation": ["delegate_permission/common.handle_all_urls"],
-      "target" : { "namespace": "android_app", "package_name": "xyz.andresito.tren.twa",
-                   "sha256_cert_fingerprints": ["44:5F:31:88:F4:AC:FE:55:57:27:0A:06:BE:8A:63:AD:86:7F:3E:E3:16:A2:98:0C:BE:57:85:9A:39:54:DC:74"] }
-    }]
+  "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+        "namespace": "android_app",
+            "package_name": "xyz.andresito.tren.twa",
+                "sha256_cert_fingerprints": [
+                      "2B:92:68:5B:05:13:E1:BD:5F:90:55:26:A6:F1:43:97:D2:34:61:C8:E1:95:16:55:9E:A0:C2:78:4A:B8:4E:5C"
+                          ]
+                            }
+                            }]
