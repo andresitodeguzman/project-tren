@@ -9,7 +9,9 @@
 let __locationHelper = new LocationHelper();
 const db = firebase.database();
 var userId = findGetParameter('id');
+
 if(!userId) window.location.replace('/');
+
 $(document).ready(()=>{
   $('.modal').modal();
 
@@ -21,15 +23,12 @@ $(document).ready(()=>{
 });
 
 function findGetParameter(parameterName) {
-  var result = null,
+  let result = null;
   tmp = [];
-  location.search
-      .substr(1)
-      .split("&")
-      .forEach(function (item) {
-        tmp = item.split("=");
-        if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
-      });
+  location.search.substr(1).split("&").forEach((item) => {
+      tmp = item.split("=");
+      if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
+  });
   return result;
 }
 
@@ -38,32 +37,21 @@ let clear = ()=>{
   $(".activity").hide();
 };
 
-let showActivity = (title)=>{
-  $(`#${title}Activity`).fadeIn();
-};
+let showActivity = (title) => $(`#${title}Activity`).fadeIn();
 
 let setStations = ()=>{
   $("#needsStations").html("");
   $("#stationsModalList").html("");
   $.each(__stationList,(index,val)=>{
-      var i = val.id;
-      var n = val.name;
-      var c = val.city;
-      var optTpl = `<option value="${i}">${n}</option>`;
-      var listTpl = `
-          <li class="collection-item">
-              <b>${n} Station</b><br>
-              ${c}
-          </li>
-      `;
-      $(".need-stations").append(optTpl);
-      $("#stationsModalList").append(listTpl);
+      const i = val.id;
+      const n = val.name;
+      const c = val.city;
+      $(".need-stations").append(`<option value="${i}">${n}</option>`);
+      $("#stationsModalList").append(`<li class="collection-item"><b>${n} Station</b><br>${c}</li>`);
   });
 }
 
-var findStationById = (id)=>{
-  return __stationList.find(obj=>{return obj.id == id;});
-}
+var findStationById = (id)=> __stationList.find(obj => { return obj.id == id; });
 
 db.ref(`/ride/${userId}`).on('value', res=>{
   var data = res.val();
@@ -91,18 +79,12 @@ db.ref(`/ride/${userId}`).on('value', res=>{
     $("#rideFromName").html(from.name);
     $("#rideToName").html(to.name);
   
-    if(nearest.is_terminal == "TRUE"){
-      $("#rideStationWord").html("Terminal");
-    } else {
-        $("#rideStationWord").html("Station");
-    }
-  
+    $("#rideStationWord").html(nearest.is_terminal == "TRUE" ? "Terminal" : "Station");
+
     if(data.bound == "northbound"){
-      var nxt = findStationById(nearest.northbound_next);
-      $("#rideNextStation").html(nxt.name);
+        $("#rideNextStation").html((findStationById(nearest.northbound_next)).name);
     } else {
-        var nxt = findStationById(nearest.southbound_next);
-        $("#rideNextStation").html(nxt.name);
+        $("#rideNextStation").html((findStationById(nearest.southbound_next)).name);
     }
   
     $("#rideDistance").html(data.distance);
