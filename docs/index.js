@@ -157,6 +157,7 @@ $("#doneRideExitButton").click(()=>{
     clear();
     $("meta[name='theme-color']").attr("content","#eeeeee");
     showActivity('main');
+    window.removeEventListener('deviceorientation', doorOpenHandler);
 });
 
 let clear = ()=>{
@@ -327,6 +328,15 @@ var askRideMyPlaces = (id)=>{
     $("#rideMyPlacesModal").modal("open");
 }
 
+var doorOpenHandler = (obj) => {
+    const headingTo = __locationHelper.doorWillOpen(
+        sessionStorage.getItem('bound'),
+        __locationHelper.getCardinal(parseInt(obj.alpha,10))
+    );
+    $('#doorOpen').html(headingTo);
+    $('#doorOpenSentence').html(`The door will open on your ${headingTo}.`);
+};
+
 var ride = async (from_id,to_id) => {
     await startWakelock();
 
@@ -340,10 +350,14 @@ var ride = async (from_id,to_id) => {
     var bt = "southbound";
     if(Math.sign(diff) == -1){
         bt = "southbound";
+        sessionStorage.setItem('bound', "southbound");
     } else {
         bt = "northbound";
         stationlist.reverse();
+        sessionStorage.setItem('bound', "northbound");
     }
+
+    window.addEventListener('deviceorientation', doorOpenHandler);
 
     $("#rideFromName").html(from.name);
     $("#rideToName").html(to.name);
@@ -404,7 +418,7 @@ var ride = async (from_id,to_id) => {
             var yr = date.getFullYear();
             var inst = `${dte} ${dy}, ${yr}`;
 
-            addToPreviousRides(from.name,to.name,inst);            
+            addToPreviousRides(from.name,to.name,inst);
         }
 
         // Declare for use later
