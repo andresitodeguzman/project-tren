@@ -8,6 +8,7 @@
 // Initiate Library Helper
 const __locationHelper = new LocationHelper();
 const db = firebase.database();
+
 sessionStorage.clear();
 window.wakelock = null;
 
@@ -76,12 +77,9 @@ $("#shareRideButton").click(()=>{
             text: `I just wanted to let you know that I am currently at ${nearest.name}. You may also track and share at which exact @officialLRT1 station you're nearby with Project Tren!`,
             url: `https://tren.andresito.xyz/share.html?id=${localStorage.getItem('user-id')}`
         })
-            .then(()=>{
-                M.toast({html:"Succcessfully shared your current location!",durationLength:3000});
-            })
-            .catch();
+            .then(() => M.toast({html:"Succcessfully shared your current location!",durationLength:3000})).catch();
     } else {
-        M.toast({html:"Share isn't available on your device",durationLength:3000});
+        M.toast({html:"Share isn't available on your device", durationLength: 3000});
     }
 });
 
@@ -113,9 +111,7 @@ $("#showChooserButton").click(()=>{
                 $("#chooserCardContent").html(tpl);
                 $("#showRideButton").hide();
             } else {
-                if(err.code == 2){
-                    M.toast({html:"Cannot get your current position at this time", durationLength:3000});                    
-                }
+                if(err.code == 2) M.toast({html:"Cannot get your current position at this time", durationLength:3000});
             }
         };
         navigator.geolocation.getCurrentPosition(successPosition,errorPosition);
@@ -136,9 +132,7 @@ $("#showChooserButton").click(()=>{
 
 });
 
-$("#deleteAllPreviousRideButton").click(()=>{
-    deleteAllPreviousRides();
-});
+$("#deleteAllPreviousRideButton").click(() => deleteAllPreviousRides());
 
 $("#closeChooserButton").click(()=>{
     clear();
@@ -147,9 +141,7 @@ $("#closeChooserButton").click(()=>{
     showActivity("main");
 }); 
 
-$("#closeRideButton").click(()=>{
-    window.location.reload();
-}); 
+$("#closeRideButton").click(() => window.location.reload()); 
 
 $("#showRideButton").click(()=>{
     var f = $("#from").val();
@@ -172,9 +164,7 @@ let clear = ()=>{
     $(".activity").hide();
 };
 
-let showActivity = (title)=>{
-    $(`#${title}Activity`).fadeIn();
-};
+let showActivity = (title) =>$(`#${title}Activity`).fadeIn();
 
 let setUserId = ()=>{
     var uid = localStorage.getItem('user-id');
@@ -194,12 +184,7 @@ let setStations = ()=>{
         var n = val.name;
         var c = val.city;
         var optTpl = `<option value="${i}">${n}</option>`;
-        var listTpl = `
-            <li class="collection-item">
-                <b>${n} Station</b><br>
-                ${c}
-            </li>
-        `;
+        var listTpl = `<li class="collection-item"><b>${n} Station</b><br>${c}</li>`;
         $(".need-stations").append(optTpl);
         $("#stationsModalList").append(listTpl);
     });
@@ -245,15 +230,7 @@ let setMyPlaces = ()=>{
 
     var mplc = $("#myplacesContainer").html();
     if(mplc == ""){
-        var tpl = `
-            <br>
-                <center>
-                    <h5>
-                        Add Home or Work to your places
-                    </h5>
-                </center>
-            <br>
-        `;
+        var tpl = `<br><center><h5>Add Home or Work to your places</h5></center><br>`;
         $("#myplacesContainer").html(tpl);
     }
 }
@@ -374,9 +351,7 @@ var ride = async (from_id,to_id) => {
     clear();
     $("meta[name='theme-color']").attr("content","#455a64");
 
-    if(!navigator.share){
-        $("#shareRideButton").hide();
-    }
+    if(!navigator.share) $("#shareRideButton").hide();
     sessionStorage.setItem('r', true);
     showActivity('ride');
 
@@ -403,9 +378,7 @@ var ride = async (from_id,to_id) => {
         // Someting to do when user arrived at the destination
         if(nearest.id == to_id){
             sessionStorage.setItem('r', false);
-            releaseWakelock().then(() => {
-                console.log('done ride releasing wakelock');
-            });
+            releaseWakelock().then(() => console.log('done ride releasing wakelock'));
 
             // Try to vibrate
             try {
@@ -482,27 +455,25 @@ var ride = async (from_id,to_id) => {
     };
 
     var errorPosition = (err)=>{
-        if(err.code == 1){
-            M.toast({html:"Please enable geolocation services",durationLength:3000});
-        } else {
-            if(err.code == 2){
-                M.toast({html:"Cannot determine current location", durationLength:3000});
-            } else {
-                if(err.code == 3){
-                    M.toast({html:"Geolocation service timed out", durationLength:3000});
-                } else {
-                    M.toast({html:"An error occurred", durationLength:3000});
-                }
-            }
+        const showToast = (html) => M.toast({ html, durationLength: 3000 });
+        switch(err.code) {
+                case(1):
+                    showToast("Please enable geolocation services");
+                    break;
+                case(2):
+                    showToast("Cannot determine current location");
+                    break;
+                case(3):
+                    showToast("Geolocation service timed out");
+                    break;
+                default:
+                    showToast("An error occurred");
+                    break;
         }
     };
 
-    var options = {
-        enableHighAccuracy:true,
-        maximumAge:0,
-    }
-
-    var watchid = navigator.geolocation.watchPosition(successPosition,errorPosition,options);
+    var options = { enableHighAccuracy: true, maximumAge: 0 };
+    var watchid = navigator.geolocation.watchPosition(successPosition, errorPosition, options);
     
 }
 
@@ -517,11 +488,7 @@ var getPreviousRides = ()=>{
 
 var addToPreviousRides = (from_name,to_name,date)=>{
     var prevrides = getPreviousRides();
-    var array = {
-        from_name:from_name,
-        to_name:to_name,
-        date:date
-    };
+    var array = { from_name, to_name, date };
     prevrides.unshift(array);
     localStorage.setItem("tren-prevrides",JSON.stringify(prevrides));
     setPreviousRides();
@@ -534,16 +501,10 @@ var setPreviousRides = ()=>{
         var tpl = `
             <div class="card hoverable">
                 <div class="card-content">
-                    <span class="card-title" style="font-size:15pt !important;">
-                        <i class="material-icons">place</i> ${elem.from_name} Station → ${elem.to_name} Station
-                    </span>
-                    <p>
-                        <i class="material-icons tiny">today</i> ${elem.date}
-                    </p>
+                    <span class="card-title" style="font-size:15pt !important;"><i class="material-icons">place</i> ${elem.from_name} Station → ${elem.to_name} Station</span>
+                    <p><i class="material-icons tiny">today</i> ${elem.date}</p>
                 </div>
-                <div class="card-action">
-                    <a class="red-text text-lighten-3" href="#!" onclick="deletePreviousRide('${index}')"><i class="material-icons">delete</i></a>
-                </div>
+                <div class="card-action"><a class="red-text text-lighten-3" href="#!" onclick="deletePreviousRide('${index}')"><i class="material-icons">delete</i></a></div>
             </div>
         `;
         $("#previousRideList").append(tpl);
@@ -551,15 +512,7 @@ var setPreviousRides = ()=>{
 
     var ht = $("#previousRideList").html();
     if(ht == ""){
-        var tpl = `
-            <br>
-                <center>
-                    <h5>
-                        All the rides you've made will be here
-                    </h5>
-                </center>
-            <br>
-        `;
+        var tpl = `<br><center><h5>All the rides you've made will be here</h5></center><br>`;
         $("#previousRideList").html(tpl);
     }
 } 
@@ -578,9 +531,7 @@ var deleteAllPreviousRides = ()=>{
     setPreviousRides();
 }
 
-var findStationById = (id)=>{
-    return __stationList.find(obj=>{return obj.id == id;});
-}
+var findStationById = (id)=> __stationList.find(obj=>{return obj.id == id;});
 
 var getPreLocationMessage = ()=>{
   var msg = localStorage.getItem("tren-prelocation-msg");
@@ -591,6 +542,4 @@ var getPreLocationMessage = ()=>{
   }
 }
 
-var setPreLocationMessage = (msg)=>{
-  localStorage.setItem("tren-prelocation-msg",msg);
-}
+var setPreLocationMessage = (msg)=> localStorage.setItem("tren-prelocation-msg",msg);
